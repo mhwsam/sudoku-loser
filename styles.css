@@ -1,0 +1,417 @@
+:root {
+  --primary: #5D5CDE;
+  --primary-light: #8382e9;
+  --primary-dark: #4b4ab2;
+
+  --light-bg: #FFFFFF;
+  --light-card: #F9FAFB;
+  --light-text: #1F2937;
+  --light-border: #E5E7EB;
+
+  --dark-bg: #121212;
+  --dark-card: #242424;
+  --dark-text: #E5E7EB;
+  --dark-border: #4B5563;
+
+  --error: #EF4444;
+  --success: #10B981;
+}
+
+.dark {
+  --bg-color: var(--dark-bg);
+  --card-bg: var(--dark-card);
+  --text-color: var(--dark-text);
+  --border-color: var(--dark-border);
+}
+
+.light {
+  --bg-color: var(--light-bg);
+  --card-bg: var(--light-card);
+  --text-color: var(--light-text);
+  --border-color: var(--light-border);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: rgba(93, 92, 222, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-outline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sudoku grid styling */
+.sudoku-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.sudoku-grid {
+  display: grid;
+  gap: 1px;
+  border: 2px solid var(--text-color);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.sudoku-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  position: relative;
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+}
+
+.sudoku-cell.selected {
+  background-color: rgba(93, 92, 222, 0.2);
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.sudoku-cell.highlighted {
+  background-color: rgba(93, 92, 222, 0.1);
+}
+
+.sudoku-cell.invalid {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.sudoku-cell.active {
+  border-color: var(--primary);
+  border-width: 2px;
+}
+
+.sudoku-cell.solved {
+  animation: solved-pulse 1s ease-in-out;
+}
+
+@keyframes solved-pulse {
+  0% {
+    background-color: var(--card-bg);
+  }
+
+  50% {
+    background-color: rgba(16, 185, 129, 0.3);
+  }
+
+  100% {
+    background-color: var(--card-bg);
+  }
+}
+
+.sudoku-cell input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: clamp(0.875rem, 4vw, 1.25rem);
+  font-weight: 500;
+  outline: none;
+  cursor: text;
+}
+
+.sudoku-cell input:focus {
+  outline: none;
+}
+
+.sudoku-cell input.original {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.sudoku-cell input.solution {
+  color: var(--success);
+  animation: fade-in 0.5s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.border-bold-right {
+  border-right: 2px solid var(--text-color);
+}
+
+.border-bold-bottom {
+  border-bottom: 2px solid var(--text-color);
+}
+
+/* Loading animation */
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--primary-light);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-bottom-color: var(--primary);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark mode switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked+.slider {
+  background-color: var(--primary);
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+}
+
+/* Shake animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Success animation */
+@keyframes success-wave {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    transform: scale(1);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    transform: scale(1.05);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    transform: scale(1);
+  }
+}
+
+.success-wave {
+  animation: success-wave 1.5s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Custom select styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235D5CDE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Tabs */
+.tab {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Blog styling */
+.blog-card {
+  transition: all 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Team member cards */
+.team-card {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+.team-card .social-links {
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.team-card:hover .social-links {
+  transform: translateY(0);
+  opacity: 1;
+}
