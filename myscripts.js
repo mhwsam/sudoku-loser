@@ -211,10 +211,17 @@ function createGrid() {
         cell.classList.add("border-bold-bottom");
       }
 
+      // const input = document.createElement("input");
+      // input.type = "text";
+      // input.maxLength = currentSize > 9 ? 2 : 1;
+      // input.readOnly = false;
       const input = document.createElement("input");
-      input.type = "text";
-      input.maxLength = currentSize > 9 ? 2 : 1;
-      input.readOnly = false;
+input.type = "text";
+input.inputMode = "numeric"; // Suggests a numeric keypad on mobile
+input.pattern = "[0-9]*";    // Helps mobile browsers validate numeric input
+input.maxLength = currentSize > 9 ? 2 : 1;
+input.readOnly = false;
+
 
       // Attach event listeners
       cell.addEventListener("click", function () {
