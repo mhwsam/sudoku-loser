@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Blog Post – Sudoku-Löser.de</title>
+  <meta name="description" content="Test Blog Post for Sudoku-Löser.de.">
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <!-- Tailwind CSS and Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light">
+  <div class="min-h-screen flex flex-col">
+    <!-- HEADER -->
+    <header class="py-4 border-b border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+          <div class="flex items-center">
+            <a href="index.html">
+              <h1 class="text-2xl md:text-3xl font-bold">Sudoku-Löser.de</h1>
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <!-- Dark mode toggle -->
+            <div class="flex items-center space-x-2">
+              <span class="text-sm"><i class="fas fa-sun"></i></span>
+              <label class="switch">
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+              <span class="text-sm"><i class="fas fa-moon"></i></span>
+            </div>
+          </div>
+        </div>
+        <!-- Navigation Tabs -->
+        <nav class="mt-4">
+          <ul class="flex space-x-4">
+            <li>
+              <a href="index.html" class="tab text-base hover:text-[var(--primary)]">Löser</a>
+            </li>
+            <li>
+              <a href="blog.html" class="tab text-base font-bold text-[var(--primary)]">Blog</a>
+            </li>
+            <li>
+              <a href="about.html" class="tab text-base hover:text-[var(--primary)]">Über uns</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow py-6">
+      <div class="container mx-auto px-4">
+        <!-- Blog Detail Section -->
+        <article class="card blog-detail-card overflow-hidden">
+          <img src="https://picsum.photos/seed/testblog/1200/400" alt="Test Blog Image" class="w-full h-64 object-cover" />
+          <div class="p-6">
+            <h2 class="text-3xl font-bold mb-4">Test Blog Post Title</h2>
+            <p class="text-sm opacity-75 mb-6">April 27, 2025</p>
+            <div class="prose prose-lg max-w-none">
+              <p>
+                This is a test blog post designed to showcase how a detailed blog article can be seamlessly integrated into the existing layout of Sudoku-Löser.de. By keeping the header, navigation tabs, and footer consistent, the user experience remains smooth and distraction-free.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac eros sed nisi consequat pretium. Suspendisse potenti. Proin lobortis, nulla id accumsan auctor, nibh massa convallis lacus, ac facilisis sapien ex ut sapien. Vivamus ac vestibulum urna. Fusce vitae dolor sit amet nunc ullamcorper fermentum.
+              </p>
+              <p>
+                Curabitur et urna nec metus laoreet vestibulum. Sed dignissim, urna sit amet condimentum semper, justo orci fermentum mauris, sed luctus eros dui id ex. Integer eget dolor ac turpis maximus placerat.
+              </p>
+            </div>
+            <div class="mt-6">
+              <a href="index.html#blog" class="btn-outline text-base inline-flex items-center">
+                <i class="fas fa-arrow-left mr-1"></i> Zurück zum Blog
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto py-4 border-t border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-2 md:mb-0">
+            <p>&copy; <span id="year"></span> 
+              <a href="index.html" class="text-blue-500 no-underline hover:no-underline">Sudoku-Löser.de</a>
+            </p>
+          </div>
+          <div class="flex space-x-4">
+            <a href="datenschutzerklaerung.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Datenschutz</a>
+            <a href="nutzungsbedingungen.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Nutzungsbedingungen</a>
+            <a href="kontakt.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Kontakt</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- Optional JavaScript -->
+  <script src="myscripts.js"></script>
+  <script>
+    // Set the current year in the footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Initialize dark mode based on user preference
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.body.classList.replace("light", "dark");
+      darkModeToggle.checked = true;
+    }
+    darkModeToggle.addEventListener("change", function () {
+      document.body.classList.toggle("dark");
+      document.body.classList.toggle("light");
+    });
+  </script>
+</body>
+</html>
