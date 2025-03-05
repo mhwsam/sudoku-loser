@@ -415,3 +415,39 @@ select {
   transform: translateY(0);
   opacity: 1;
 }
+
+
+/* Blog Details CSS */
+
+/* BLOG READABILITY ENHANCEMENTS */
+.blog-detail-card {
+  max-width: 1200px; /* Keeps text in a comfortable reading width */
+  margin: 0 auto;   /* Centers the blog content */
+  padding: 2rem;
+  line-height: 1.7; /* Adds more line spacing for easier reading */
+}
+
+.blog-detail-card h2,
+.blog-detail-card h3,
+.blog-detail-card h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.blog-detail-card p {
+  margin-bottom: 1rem;
+  font-size: 1.125rem; /* Slightly larger than the base for readability */
+  color: var(--text-color);
+}
+
+.blog-detail-card ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-detail-card li {
+  margin-bottom: 0.5rem;
+}
