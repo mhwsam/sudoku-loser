@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Killer Sudoku-Löser -- Sudoku-Löser.de</title>
+  <meta name="description"
+    content="Löse Killer Sudoku-Rätsel schnell und einfach. Erstelle Käfige mit Summen und lass unseren Algorithmus die Lösung finden. Perfekt für Anfänger und Profis." />
+  <meta name="keywords"
+    content="Killer Sudoku, Sudoku Löser, Summen Sudoku, Killer Sudoku Solver, Käfige Sudoku, Killer Sudoku online lösen, Sudoku Strategie, Sudoku Lösung, Sudoku Tricks, Sudoku Generator, Sudoku für Anfänger, Sudoku für Profis" />
+  <meta name="author" content="Sudoku-Löser.de" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xn--sudoku-lser-yfb.de/killer-sudoku.html" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Killer Sudoku-Löser -- Sudoku-Löser.de" />
+  <meta property="og:description"
+    content="Löse Killer Sudoku-Rätsel schnell und einfach. Erstelle Käfige mit Summen und lass unseren Algorithmus die Lösung finden." />
+  <meta property="og:image" content="https://xn--sudoku-lser-yfb.de/images/preview.png" />
+  <meta property="og:url" content="https://xn--sudoku-lser-yfb.de/killer-sudoku.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Killer Sudoku-Löser -- Sudoku-Löser.de" />
+  <meta name="twitter:description"
+    content="Löse Killer Sudoku-Rätsel schnell und einfach. Erstelle Käfige mit Summen und lass unseren Algorithmus die Lösung finden." />
+  <meta name="twitter:image" content="https://xn--sudoku-lser-yfb.de/images/preview.png" />
+
+  <!-- Stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #5D5CDE;
+      --text-color: #333;
+      --border-color: #ddd;
+      --card-bg: #ffffff;
+    }
+
+    .dark {
+      --text-color: #e0e0e0;
+      --border-color: #444;
+      --card-bg: #222;
+    }
+
+    body {
+      color: var(--text-color);
+      transition: all 0.3s ease;
+    }
+
+    /* Handle dark mode detection */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+      }
+    }
+
+    /* Tabs */
+    .tab {
+      @apply px-3 py-2 text-sm md:text-base rounded-t-md transition-colors
+      text-gray-600 dark:text-gray-300 hover:text-[var(--primary)];
+    }
+
+    .tab.active {
+      @apply bg-white dark:bg-[#222] text-[var(--primary)] border-b-2 border-[var(--primary)];
+    }
+
+    /* Cards */
+    .card {
+      @apply rounded-lg shadow-md bg-white dark:bg-[#222] transition-all;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      @apply px-4 py-2 rounded-md bg-[var(--primary)] text-white hover:bg-opacity-90 
+      transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .btn-outline {
+      @apply px-4 py-2 rounded-md border border-[var(--primary)] text-[var(--primary)]
+      hover:bg-[var(--primary)] hover:bg-opacity-10 transition-all shadow-sm
+      disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    /* Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Killer Sudoku specific styles */
+    /* Custom cage styling */
+    .cage-cell {
+      position: relative;
+    }
+
+    .cage-sum {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 10px;
+      color: #666;
+      z-index: 10;
+    }
+
+    .dark .cage-sum {
+      color: #aaa;
+    }
+
+    /* Cell borders based on cage membership */
+    .sudoku-cell {
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+
+    /* Bold borders for 3x3 grid */
+    .sudoku-row:nth-child(3n) .sudoku-cell {
+      border-bottom: 2px solid #666;
+    }
+
+    .sudoku-cell:nth-child(3n) {
+      border-right: 2px solid #666;
+    }
+
+    .dark .sudoku-row:nth-child(3n) .sudoku-cell {
+      border-bottom: 2px solid #777;
+    }
+
+    .dark .sudoku-cell:nth-child(3n) {
+      border-right: 2px solid #777;
+    }
+
+    /* Cage highlighted border color */
+    .cage-border-top {
+      border-top: 2px solid var(--primary) !important;
+    }
+
+    .cage-border-right {
+      border-right: 2px solid var(--primary) !important;
+    }
+
+    .cage-border-bottom {
+      border-bottom: 2px solid var(--primary) !important;
+    }
+
+    .cage-border-left {
+      border-left: 2px solid var(--primary) !important;
+    }
+
+    /* Custom animations */
+    @keyframes pulse-bg {
+      0% {
+        background-color: rgba(93, 92, 222, 0.1);
+      }
+
+      50% {
+        background-color: rgba(93, 92, 222, 0.3);
+      }
+
+      100% {
+        background-color: rgba(93, 92, 222, 0.1);
+      }
+    }
+
+    .solving-animation {
+      animation: pulse-bg 1.2s infinite;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 4px solid rgba(93, 92, 222, 0.1);
+      border-left-color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Tooltip */
+    .tooltip {
+      visibility: hidden;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      z-index: 100;
+      font-size: 14px;
+      white-space: nowrap;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip-container:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    #sudoku-container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      border: 2px solid var(--border-color);
+      background-color: var(--card-bg);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .sudoku-row {
+      display: flex;
+      width: 100%;
+    }
+
+    .sudoku-cell {
+      width: calc(100% / 9); /* Each cell takes exactly 1/9 of the container width */
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    .sudoku-cell input {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-color);
+    }
+
+    .sudoku-cell input:focus {
+      background-color: rgba(93, 92, 222, 0.1);
+    }
+
+    /* Adding these utility classes to make visibility during loading clearer */
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 640px) {
+      #sudoku-container {
+        max-width: 100%;
+      }
+      
+      .sudoku-cell input {
+        font-size: 1rem;
+      }
+      
+      .cage-sum {
+        font-size: 8px;
+      }
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GL6NQYRK97"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-GL6NQYRK97');
+  </script>
+</head>
+
+
+<body>
+  <div class="min-h-screen flex flex-col">
+    <!-- HEADER -->
+    <header class="py-4 border-b border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+          <div class="flex items-center">
+            <a href="index.html">
+              <h1 class="text-2xl md:text-3xl font-bold">Sudoku-Löser.de</h1>
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <!-- Dark mode toggle -->
+            <div class="flex items-center space-x-2">
+              <span class="text-sm"><i class="fas fa-sun"></i></span>
+              <label class="switch">
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+              <span class="text-sm"><i class="fas fa-moon"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <nav class="mt-4">
+          <ul class="flex overflow-x-auto space-x-2 md:space-x-4" role="tablist">
+            <li>
+              <a href="index.html" class="tab">
+                Löser
+              </a>
+            </li>
+            <li>
+              <a href="sudoku-kostenlos-spielen.html" class="tab flex items-center">
+                Tägliches Sudoku
+              </a>
+            </li>
+            <li>
+              <a href="killer-sudoku-solver.html" class="tab active" aria-selected="true">
+                Killer Sudoku
+              </a>
+            </li>
+            <li>
+              <a href="blog.html" class="tab flex items-center">
+                Blog
+              </a>
+            </li>
+            <li>
+              <a href="about.html" class="tab">
+                Über uns
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="flex-grow py-6">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-6 text-center">Killer Sudoku Löser</h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="card p-4">
+              <!-- Sudoku Grid Container -->
+              <div id="sudoku-container" class="mx-auto mb-6">
+                <!-- Grid will be populated by JavaScript -->
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex flex-wrap justify-center gap-2 action-buttons mt-4">
+                <button id="btn-create-cage" class="btn-primary">
+                  <i class="fas fa-plus-square mr-1"></i> Käfig erstellen
+                </button>
+                <button id="btn-reset-cage" class="btn-outline">
+                  <i class="fas fa-times mr-1"></i> Abbrechen
+                </button>
+                <button id="btn-solve" class="btn-primary">
+                  <i class="fas fa-magic mr-1"></i> Lösen
+                </button>
+                <button id="btn-reset" class="btn-outline">
+                  <i class="fas fa-eraser mr-1"></i> Zurücksetzen
+                </button>
+              </div>
+
+              <!-- Status / Loading -->
+              <div id="solver-status" class="mt-4 text-center hidden p-3 rounded-md"></div>
+            </div>
+          </div>
+
+          <!-- Instructions / Cage List -->
+          <div class="lg:col-span-1">
+            <div class="card p-4 mb-6">
+              <h2 class="text-xl font-bold mb-3">Anleitung</h2>
+              <div class="space-y-2">
+                <h3 class="font-semibold mb-2">Käfige erstellen:</h3>
+                <ol class="list-decimal pl-5 space-y-1">
+                  <li>Klicken Sie auf "Käfig erstellen"</li>
+                  <li>Wählen Sie verbundene Zellen für Ihren Käfig</li>
+                  <li>Geben Sie die Summe für den Käfig ein</li>
+                  <li>Klicken Sie auf "Bestätigen", um den Käfig zu speichern</li>
+                </ol>
+              </div>
+
+              <div class="mt-4 space-y-2">
+                <h3 class="font-semibold mb-2">Regeln:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Standardregeln von Sudoku gelten (1-9 in jeder Zeile, Spalte und 3x3-Box)</li>
+                  <li>Zellen innerhalb eines Käfigs müssen die angegebene Summe ergeben</li>
+                  <li>Keine Ziffer darf sich innerhalb eines Käfigs wiederholen</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card p-4">
+              <div id="cage-list">
+                <h3 class="text-xl font-bold mb-3">Definierte Käfige:</h3>
+                <div id="cages-container" class="text-sm max-h-[300px] overflow-y-auto">
+                  <p class="text-gray-500 dark:text-gray-400 italic">Noch keine Käfige definiert</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-3">
+            <div class="card p-4 mb-6">
+              <h2 class="text-xl font-bold mb-3">Was ist Killer Sudoku?</h2>
+              <p class="mb-3">
+                <strong>Killer Sudoku</strong> kombiniert Elemente aus Sudoku und Kakuro. Wie beim normalen Sudoku müssen alle Zeilen, Spalten und 3×3-Boxen jeweils die Ziffern 1 bis 9 enthalten. Der Unterschied besteht darin, dass das Rätsel zusätzliche "Käfige" (durch gestrichelte Linien umschlossene Bereiche) enthält, deren Zellen eine vorgegebene Summe ergeben müssen.
+              </p>
+              <p>
+                Diese zusätzliche Einschränkung macht Killer Sudoku zu einer besonders herausfordernden und befriedigenden Variante des klassischen Sudoku-Rätsels.
+              </p>
+            </div>
+
+            <div class="card p-4 mb-6">
+              <h2 class="text-xl font-bold mb-3">Strategien zum Lösen von Killer Sudoku</h2>
+              <div class="space-y-2">
+                <p><i class="fa-solid fa-lightbulb"></i> <strong>Kombinationssummen:</strong> Lernen Sie die möglichen Kombinationen für Summen in Käfigen verschiedener Größen.</p>
+                <p><i class="fa-solid fa-lightbulb"></i> <strong>Überlappende Einschränkungen:</strong> Nutzen Sie die Einschränkungen von Käfigen, Zeilen, Spalten und Boxen.</p>
+                <p><i class="fa-solid fa-lightbulb"></i> <strong>Kleine Käfige zuerst:</strong> Beginnen Sie mit der Analyse von Käfigen mit wenigen Zellen oder niedrigen Summen.</p>
+                <p><i class="fa-solid fa-lightbulb"></i> <strong>Ausschlussmethode:</strong> Eliminieren Sie unmögliche Ziffern basierend auf Käfigsummen und Sudoku-Regeln.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal for entering cage sum -->
+    <div id="cage-sum-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <div class="bg-white dark:bg-[var(--card-bg)] rounded-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-xl font-bold mb-4 text-[var(--primary)]">Käfigsumme eingeben</h3>
+        <p class="mb-4">Geben Sie die Summe für den ausgewählten Käfig ein (Zellen: <span id="selected-cells-count">0</span>):</p>
+        <input type="number" id="cage-sum-input" class="w-full px-4 py-2 border border-[var(--border-color)] rounded-md mb-4 bg-[var(--card-bg)] text-[var(--text-color)] text-base" min="1">
+        <div class="flex justify-end space-x-2">
+          <button id="btn-cancel-cage" class="btn-outline">
+            Abbrechen
+          </button>
+          <button id="btn-confirm-cage" class="btn-primary">
+            Bestätigen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50 hidden">
+      <div class="spinner mb-4"></div>
+      <p class="text-white text-lg font-semibold">Rätsel wird gelöst...</p>
+      <p id="loading-status" class="text-white text-sm mt-2">Initialisiere...</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto py-4 border-t border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-2 md:mb-0">
+            <p>&copy; <span id="year"></span>
+              <a href="index.html" class="text-[var(--primary)] no-underline hover:no-underline">Sudoku-Löser.de</a>
+            </p>
+          </div>
+
+          <div class="flex space-x-4">
+            <a href="datenschutzerklaerung.html"
+              class="text-[var(--text-color)] hover:text-[var(--primary)]">Datenschutz</a>
+            <a href="nutzungsbedingungen.html"
+              class="text-[var(--text-color)] hover:text-[var(--primary)]">Nutzungsbedingungen</a>
+            <a href="kontakt.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Kontakt</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Initialize dark mode based on user preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+      document.getElementById('darkModeToggle').checked = true;
+    }
+    
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      if (event.matches) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('darkModeToggle').checked = true;
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('darkModeToggle').checked = false;
+      }
+    });
+
+    // Dark mode toggle
+    document.getElementById('darkModeToggle').addEventListener('change', function() {
+      if (this.checked) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    });
+
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Globals
+    let isCreatingCage = false;
+    let selectedCells = [];
+    let cages = [];
+    let grid = Array(9).fill().map(() => Array(9).fill(0));
+    
+    // Initialize the Sudoku grid
+    function initGrid() {
+      const container = document.getElementById('sudoku-container');
+      container.innerHTML = '';
+      
+      for (let row = 0; row < 9; row++) {
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('sudoku-row');
+        
+        for (let col = 0; col < 9; col++) {
+          const cellDiv = document.createElement('div');
+          cellDiv.classList.add(
+            'sudoku-cell', 
+            'cage-cell',
+            'bg-white', 
+            'dark:bg-[var(--card-bg)]'
+          );
+          cellDiv.dataset.row = row;
+          cellDiv.dataset.col = col;
+          
+          const input = document.createElement('input');
+          input.type = 'tel';
+          input.maxLength = 1;
+          input.pattern = '[1-9]';
+          input.addEventListener('input', function(e) {
+            const val = e.target.value;
+            // Allow only digits 1-9
+            if (!/^[1-9]$/.test(val)) {
+              e.target.value = '';
+            }
+            updateGrid();
+          });
+          
+          cellDiv.appendChild(input);
+          cellDiv.addEventListener('click', () => handleCellClick(row, col));
+          
+          rowDiv.appendChild(cellDiv);
+        }
+        
+        container.appendChild(rowDiv);
+      }
+    }
+    
+    // Handle cell clicks for cage creation
+    function handleCellClick(row, col) {
+      if (!isCreatingCage) return;
+      
+      const cellKey = `${row},${col}`;
+      const cellIndex = selectedCells.findIndex(cell => cell === cellKey);
+      
+      if (cellIndex === -1) {
+        // Check if this cell is connected to existing selection
+        if (selectedCells.length > 0) {
+          const isConnected = selectedCells.some(cellStr => {
+            const [r, c] = cellStr.split(',').map(Number);
+            return (
+              (Math.abs(r - row) === 1 && c === col) || 
+              (r === row && Math.abs(c - col) === 1)
+            );
+          });
+          
+          if (!isConnected && selectedCells.length > 0) {
+            showToast("Zellen müssen verbunden sein!");
+            return;
+          }
+        }
+        
+        // Cell not selected, add it
+        selectedCells.push(cellKey);
+        highlightSelectedCell(row, col, true);
+      } else {
+        // Cell was selected, check if removing breaks connectivity
+        if (selectedCells.length > 1) {
+          // Create a temp array without this cell to test connectivity
+          const tempSelected = [...selectedCells];
+          tempSelected.splice(cellIndex, 1);
+          
+          if (!areConnected(tempSelected)) {
+            showToast("Das Entfernen dieser Zelle würde den Käfig unterbrechen!");
+            return;
+          }
+        }
+        
+        // Remove cell
+        selectedCells.splice(cellIndex, 1);
+        highlightSelectedCell(row, col, false);
+      }
+      
+      document.getElementById('selected-cells-count').textContent = selectedCells.length;
+      
+      // Show cage sum modal if at least one cell is selected
+      if (selectedCells.length > 0) {
+        document.getElementById('btn-confirm-cage').disabled = false;
+      } else {
+        document.getElementById('btn-confirm-cage').disabled = true;
+      }
+    }
+    
+    // Check if cells form a connected component
+    function areConnected(cellsArray) {
+      if (cellsArray.length <= 1) return true;
+      
+      const visited = new Set();
+      const [startCell] = cellsArray;
+      
+      function dfs(cellStr) {
+        visited.add(cellStr);
+        const [row, col] = cellStr.split(',').map(Number);
+        
+        // Check all 4 adjacent cells
+        const neighbors = [
+          `${row+1},${col}`,
+          `${row-1},${col}`,
+          `${row},${col+1}`,
+          `${row},${col-1}`
+        ];
+        
+        for (const neighbor of neighbors) {
+          if (cellsArray.includes(neighbor) && !visited.has(neighbor)) {
+            dfs(neighbor);
+          }
+        }
+      }
+      
+      dfs(startCell);
+      return visited.size === cellsArray.length;
+    }
+    
+    // Highlight/unhighlight a cell during cage creation
+    function highlightSelectedCell(row, col, highlight) {
+      const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+      
+      if (highlight) {
+        cell.classList.add('bg-[var(--primary)]/20');
+        cell.classList.remove('bg-white', 'dark:bg-[var(--card-bg)]');
+      } else {
+        cell.classList.remove('bg-[var(--primary)]/20');
+        cell.classList.add('bg-white', 'dark:bg-[var(--card-bg)]');
+      }
+    }
+    
+    // Create a new cage
+    function createCage(sum) {
+      if (selectedCells.length === 0) return;
+      
+      // Ensure no cell is part of another cage
+      for (const cellStr of selectedCells) {
+        for (const cage of cages) {
+          if (cage.cells.includes(cellStr)) {
+            showToast("Eine oder mehrere Zellen gehören bereits zu einem anderen Käfig");
+            return;
+          }
+        }
+      }
+      
+      const cage = {
+        id: Date.now(),
+        sum: sum,
+        cells: [...selectedCells]
+      };
+      
+      cages.push(cage);
+      updateCageBorders();
+      updateCagesList();
+      
+      // Clear selection
+      selectedCells.forEach(cellStr => {
+        const [row, col] = cellStr.split(',').map(Number);
+        highlightSelectedCell(row, col, false);
+      });
+      
+      selectedCells = [];
+      document.getElementById('cage-sum-modal').classList.add('hidden');
+    }
+    
+    // Update borders of cells based on cage membership
+    function updateCageBorders() {
+      // First reset all borders to default
+      document.querySelectorAll('.sudoku-cell').forEach(cell => {
+        cell.classList.remove(
+          'cage-border-top', 
+          'cage-border-right', 
+          'cage-border-bottom', 
+          'cage-border-left'
+        );
+        
+        // Remove any existing cage sum
+        const existingSum = cell.querySelector('.cage-sum');
+        if (existingSum) {
+          existingSum.remove();
+        }
+      });
+      
+      // Then set cage borders and sums
+      cages.forEach(cage => {
+        const cellObjects = cage.cells.map(cellStr => {
+          const [row, col] = cellStr.split(',').map(Number);
+          return { row, col, cellStr };
+        });
+        
+        cellObjects.forEach(({ row, col, cellStr }) => {
+          const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+          
+          // Check all 4 directions to see if border should be highlighted
+          if (!cage.cells.includes(`${row-1},${col}`)) {
+            cell.classList.add('cage-border-top');
+          }
+          if (!cage.cells.includes(`${row+1},${col}`)) {
+            cell.classList.add('cage-border-bottom');
+          }
+          if (!cage.cells.includes(`${row},${col-1}`)) {
+            cell.classList.add('cage-border-left');
+          }
+          if (!cage.cells.includes(`${row},${col+1}`)) {
+            cell.classList.add('cage-border-right');
+          }
+        });
+        
+        // Add sum to the top-left cell of the cage
+        let topLeftCell = cellObjects[0];
+        for (const cell of cellObjects) {
+          if (cell.row < topLeftCell.row || 
+              (cell.row === topLeftCell.row && cell.col < topLeftCell.col)) {
+            topLeftCell = cell;
+          }
+        }
+        
+        const domCell = document.querySelector(`[data-row="${topLeftCell.row}"][data-col="${topLeftCell.col}"]`);
+        const sumSpan = document.createElement('span');
+        sumSpan.classList.add('cage-sum');
+        sumSpan.textContent = cage.sum;
+        domCell.appendChild(sumSpan);
+      });
+    }
+    
+    // Update the list of cages displayed in the sidebar
+    function updateCagesList() {
+      const container = document.getElementById('cages-container');
+      
+      if (cages.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 italic">Noch keine Käfige definiert</p>';
+        return;
+      }
+      
+      container.innerHTML = '';
+      
+      cages.forEach((cage, index) => {
+        const cageDiv = document.createElement('div');
+        cageDiv.classList.add('flex', 'justify-between', 'items-center', 'mb-2', 'p-2', 'bg-gray-50', 'dark:bg-gray-800', 'rounded');
+        
+        // Format cell list for display
+        const cellDisplay = cage.cells.map(cell => {
+          const [row, col] = cell.split(',').map(Number);
+          return `R${row+1}C${col+1}`;
+        }).join(', ');
+        
+        cageDiv.innerHTML = `
+          <div>
+            <span class="font-medium">Käfig ${index+1}:</span> 
+            <span>Summe = ${cage.sum}</span>
+          </div>
+          <button class="text-red-500 hover:text-red-700 transition-colors delete-cage" data-cage-id="${cage.id}">
+            ✕
+          </button>
+        `;
+        
+        cageDiv.querySelector('.delete-cage').addEventListener('click', () => {
+          cages = cages.filter(c => c.id !== cage.id);
+          updateCageBorders();
+          updateCagesList();
+        });
+        
+        // Add hover tooltip with cell list
+        cageDiv.classList.add('tooltip-container', 'relative');
+        const tooltip = document.createElement('div');
+        tooltip.classList.add('tooltip');
+        tooltip.textContent = cellDisplay;
+        cageDiv.appendChild(tooltip);
+        
+        container.appendChild(cageDiv);
+      });
+    }
+    
+    // Update the internal grid data structure
+    function updateGrid() {
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+          const input = document.querySelector(`[data-row="${row}"][data-col="${col}"] input`);
+          grid[row][col] = input.value ? parseInt(input.value) : 0;
+        }
+      }
+    }
+    
+    // Reset the grid
+    function resetGrid() {
+      document.querySelectorAll('.sudoku-cell input').forEach(input => {
+        input.value = '';
+        input.disabled = false;
+        input.classList.remove('text-green-600', 'dark:text-green-400');
+      });
+      
+      grid = Array(9).fill().map(() => Array(9).fill(0));
+      cages = [];
+      updateCageBorders();
+      updateCagesList();
+      
+      document.getElementById('solver-status').classList.add('hidden');
+    }
+    
+    // Solve the Killer Sudoku puzzle
+    async function solveKillerSudoku() {
+      // Check if we have any cages defined
+      if (cages.length === 0) {
+        showToast("Bitte definieren Sie zuerst mindestens einen Käfig");
+        return;
+      }
+      
+      // Show loading overlay
+      document.getElementById('loading-overlay').classList.remove('hidden');
+      
+      // Make sure grid is updated with user input
+      updateGrid();
+      
+      // Disable all inputs during solving
+      document.querySelectorAll('.sudoku-cell input').forEach(input => {
+        input.disabled = true;
+      });
+      
+      try {
+        // Create solver status element
+        const statusEl = document.getElementById('solver-status');
+        statusEl.innerHTML = 'Lösung wird berechnet...';
+        statusEl.classList.remove('hidden', 'bg-green-100', 'bg-red-100');
+        statusEl.classList.add('bg-blue-100');
+        
+        // Use setTimeout to allow UI to update before computationally intensive solving
+        setTimeout(async () => {
+          const startTime = performance.now();
+          
+          // Call solve method
+          const result = await solve(grid, cages);
+          
+          // Hide loading overlay
+          document.getElementById('loading-overlay').classList.add('hidden');
+          
+          if (result.solved) {
+            // Update UI with solution
+            for (let row = 0; row < 9; row++) {
+              for (let col = 0; col < 9; col++) {
+                const input = document.querySelector(`[data-row="${row}"][data-col="${col}"] input`);
+                if (input.value === '') {
+                  input.value = result.grid[row][col];
+                  input.classList.add('text-green-600', 'dark:text-green-400');
+                }
+              }
+            }
+            
+            const solveTime = ((performance.now() - startTime) / 1000).toFixed(2);
+            statusEl.innerHTML = `✅ In ${solveTime} Sekunden gelöst!`;
+            statusEl.classList.remove('bg-blue-100');
+            statusEl.classList.add('bg-green-100', 'dark:bg-green-900', 'dark:text-green-100');
+          } else {
+            statusEl.innerHTML = '❌ Keine Lösung gefunden. Überprüfen Sie Ihre Käfigdefinitionen.';
+            statusEl.classList.remove('bg-blue-100');
+            statusEl.classList.add('bg-red-100', 'dark:bg-red-900', 'dark:text-red-100');
+            
+            // Re-enable inputs
+            document.querySelectorAll('.sudoku-cell input').forEach(input => {
+              input.disabled = false;
+            });
+          }
+        }, 100);
+      } catch (error) {
+        console.error('Solver error:', error);
+        document.getElementById('loading-overlay').classList.add('hidden');
+        
+        const statusEl = document.getElementById('solver-status');
+        statusEl.innerHTML = '❌ Fehler beim Lösen des Rätsels: ' + error.message;
+        statusEl.classList.remove('bg-blue-100');
+        statusEl.classList.add('bg-red-100', 'dark:bg-red-900', 'dark:text-red-100');
+        statusEl.classList.remove('hidden');
+        
+        // Re-enable inputs
+        document.querySelectorAll('.sudoku-cell input').forEach(input => {
+          input.disabled = false;
+        });
+      }
+    }
+    
+    // The solving algorithm with backtracking
+    async function solve(originalGrid, cages) {
+      // Create a copy of the grid to work with
+      const grid = originalGrid.map(row => [...row]);
+      
+      // Precompute cage membership for quick lookup
+      const cellToCageMap = {};
+      cages.forEach(cage => {
+        cage.cells.forEach(cellStr => {
+          cellToCageMap[cellStr] = cage;
+        });
+      });
+      
+      // Check if the grid is valid so far
+      function isValid(row, col, num) {
+        // Check row and column
+        for (let i = 0; i < 9; i++) {
+          if (grid[row][i] === num || grid[i][col] === num) {
+            return false;
+          }
+        }
+        
+        // Check 3x3 box
+        const boxRow = Math.floor(row / 3) * 3;
+        const boxCol = Math.floor(col / 3) * 3;
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            if (grid[boxRow + i][boxCol + j] === num) {
+              return false;
+            }
+          }
+        }
+        
+        // Check cage constraints - sum and no repeats
+        const cellKey = `${row},${col}`;
+        const cage = cellToCageMap[cellKey];
+        if (cage) {
+          // Create a temporary grid with the proposed number
+          const tempGrid = grid.map(row => [...row]);
+          tempGrid[row][col] = num;
+          
+          // Get all filled numbers in this cage
+          const filledCells = cage.cells.filter(cellStr => {
+            const [r, c] = cellStr.split(',').map(Number);
+            return tempGrid[r][c] !== 0;
+          });
+          
+          // Check sum if all cells are filled
+          if (filledCells.length === cage.cells.length) {
+            let sum = 0;
+            const used = new Set();
+            
+            for (const cellStr of cage.cells) {
+              const [r, c] = cellStr.split(',').map(Number);
+              sum += tempGrid[r][c];
+              
+              // Check for repeats within cage
+              if (used.has(tempGrid[r][c])) {
+                return false;
+              }
+              used.add(tempGrid[r][c]);
+            }
+            
+            if (sum !== cage.sum) {
+              return false;
+            }
+          } 
+          // If not all cells are filled, check if current sum exceeds target
+          else {
+            let currentSum = 0;
+            const used = new Set();
+            
+            for (const cellStr of filledCells) {
+              const [r, c] = cellStr.split(',').map(Number);
+              currentSum += tempGrid[r][c];
+              
+              // Check for repeats
+              if (used.has(tempGrid[r][c])) {
+                return false;
+              }
+              used.add(tempGrid[r][c]);
+            }
+            
+            // If current sum already exceeds target, invalid
+            if (currentSum > cage.sum) {
+              return false;
+            }
+            
+            // If remaining cells can't possibly sum to target, invalid
+            const remainingCells = cage.cells.length - filledCells.length;
+            // Minimum possible sum for remaining cells (using 1s)
+            const minPossibleSum = remainingCells;
+            if (currentSum + minPossibleSum > cage.sum) {
+              return false;
+            }
+          }
+        }
+        
+        return true;
+      }
+      
+      let steps = 0;
+      const maxSteps = 1000000; // Prevent infinite loops
+      
+      // Find the cell with the fewest possible valid values
+      function findBestCell() {
+        let bestCell = null;
+        let minOptions = 10; // More than possible (9)
+        
+        for (let row = 0; row < 9; row++) {
+          for (let col = 0; col < 9; col++) {
+            if (grid[row][col] === 0) {
+              let validOptions = 0;
+              for (let num = 1; num <= 9; num++) {
+                if (isValid(row, col, num)) {
+                  validOptions++;
+                }
+              }
+              
+              if (validOptions < minOptions) {
+                minOptions = validOptions;
+                bestCell = { row, col, options: validOptions };
+                
+                // If we find a cell with no valid options, return immediately
+                if (validOptions === 0) {
+                  return bestCell;
+                }
+              }
+            }
+          }
+        }
+        
+        return bestCell;
+      }
+      
+      // Update loading status periodically
+      let lastUpdateTime = performance.now();
+      
+      async function backtrack() {
+        steps++;
+        
+        // Update status every 200ms
+        const currentTime = performance.now();
+        if (currentTime - lastUpdateTime > 200) {
+          lastUpdateTime = currentTime;
+          document.getElementById('loading-status').textContent = `${steps} Kombinationen geprüft...`;
+          // Allow UI to update
+          await new Promise(resolve => setTimeout(resolve, 0));
+        }
+        
+        if (steps > maxSteps) {
+          throw new Error("Die Berechnung hat zu viele Schritte benötigt. Bitte überprüfen Sie Ihre Käfig-Definitionen.");
+        }
+        
+        // Find an empty cell with fewest options
+        const cell = findBestCell();
+        
+        // If no empty cell, puzzle is solved
+        if (cell === null) {
+          return true;
+        }
+        
+        // If a cell has no valid options, this path is invalid
+        if (cell.options === 0) {
+          return false;
+        }
+        
+        const { row, col } = cell;
+        
+        // Try each digit 1-9
+        for (let num = 1; num <= 9; num++) {
+          if (isValid(row, col, num)) {
+            grid[row][col] = num;
+            
+            // Move to next cell recursively
+            if (await backtrack()) {
+              return true;
+            }
+            
+            // If not successful, backtrack
+            grid[row][col] = 0;
+          }
+        }
+        
+        return false;
+      }
+      
+      const result = await backtrack();
+      
+      return {
+        solved: result,
+        grid: grid,
+        steps: steps
+      };
+    }
+    
+    // Show toast message
+    function showToast(message) {
+      // Create toast element if it doesn't exist
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.classList.add(
+          'fixed', 
+          'bottom-4', 
+          'left-1/2', 
+          'transform', 
+          '-translate-x-1/2',
+          'bg-black',
+          'bg-opacity-80',
+          'text-white',
+          'py-2',
+          'px-4',
+          'rounded-lg',
+          'shadow-lg',
+          'z-50',
+          'transition-opacity',
+          'duration-300',
+          'opacity-0'
+        );
+        document.body.appendChild(toast);
+      }
+      
+      // Set message and show
+      toast.textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      
+      // Hide after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 3000);
+    }
+    
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      initGrid();
+      
+      // Create cage button
+      document.getElementById('btn-create-cage').addEventListener('click', () => {
+        isCreatingCage = true;
+        selectedCells = [];
+        document.getElementById('btn-create-cage').classList.add('opacity-75');
+        document.getElementById('btn-reset-cage').classList.remove('hidden');
+        document.getElementById('selected-cells-count').textContent = '0';
+        
+        showToast('Wählen Sie Zellen, um einen Käfig zu erstellen');
+      });
+      
+      // Reset cage creation
+      document.getElementById('btn-reset-cage').addEventListener('click', () => {
+        isCreatingCage = false;
+        document.getElementById('btn-create-cage').classList.remove('opacity-75');
+        
+        // Reset cell highlighting
+        selectedCells.forEach(cellStr => {
+          const [row, col] = cellStr.split(',').map(Number);
+          highlightSelectedCell(row, col, false);
+        });
+        
+        selectedCells = [];
+        document.getElementById('cage-sum-modal').classList.add('hidden');
+      });
+      
+      // Solve button
+      document.getElementById('btn-solve').addEventListener('click', solveKillerSudoku);
+      
+      // Reset button
+      document.getElementById('btn-reset').addEventListener('click', resetGrid);
+      
+      // Cage sum modal trigger
+      document.getElementById('btn-create-cage').addEventListener('dblclick', () => {
+        if (selectedCells.length > 0) {
+          document.getElementById('cage-sum-modal').classList.remove('hidden');
+          document.getElementById('cage-sum-input').focus();
+        } else {
+          showToast('Wählen Sie zuerst Zellen für den Käfig aus');
+        }
+      });
+      
+      // Cage sum modal cancel button
+      document.getElementById('btn-cancel-cage').addEventListener('click', () => {
+        document.getElementById('cage-sum-modal').classList.add('hidden');
+      });
+      
+      // Cage sum modal confirm button
+      document.getElementById('btn-confirm-cage').addEventListener('click', () => {
+        const sumInput = document.getElementById('cage-sum-input');
+        const sum = parseInt(sumInput.value);
+        
+        if (!sum || sum <= 0) {
+          showToast('Bitte geben Sie eine gültige Summe ein');
+          return;
+        }
+        
+        createCage(sum);
+        
+        // Reset cage creation mode
+        isCreatingCage = false;
+        document.getElementById('btn-create-cage').classList.remove('opacity-75');
+        sumInput.value = '';
+      });
+      
+      // When user has selected cells, show modal on double-click on a selected cell
+      document.addEventListener('dblclick', (e) => {
+        if (!isCreatingCage || selectedCells.length === 0) return;
+        
+        const cellDiv = e.target.closest('.sudoku-cell');
+        if (!cellDiv) return;
+        
+        const row = parseInt(cellDiv.dataset.row);
+        const col = parseInt(cellDiv.dataset.col);
+        const cellKey = `${row},${col}`;
+        
+        if (selectedCells.includes(cellKey)) {
+          document.getElementById('cage-sum-modal').classList.remove('hidden');
+          document.getElementById('cage-sum-input').focus();
+        }
+      });
+      
+      // Initially hide reset cage button
+      document.getElementById('btn-reset-cage').classList.add('hidden');
+    });
+  </script>
+</body>
+
+</html>

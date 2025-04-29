@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Tägliches Sudoku - Sudoku-Löser.de</title>
+  <meta name="description"
+    content="Entdecken und spielen Sie täglich ein neues, kostenloses Sudoku auf Sudoku-Löser.de – spannend und basierend auf dem Tagesdatum!" />
+  <meta name="keywords"
+    content="Tägliches Sudoku, Sudoku des Tages, Daily Sudoku, Sudoku Challenge, Sudoku Rätsel, Sudoku Tagesaufgabe, Sudoku täglich neu" />
+  <meta name="author" content="Sudoku-Löser.de" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xn--sudoku-lser-yfb.de/daily-sudoku.html" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Tägliches Sudoku - Sudoku-Löser.de" />
+  <meta property="og:description"
+    content="Spielen Sie täglich ein neues Sudoku auf Sudoku-Löser.de. Jeden Tag eine neue Herausforderung basierend auf dem Tagesdatum." />
+  <meta property="og:image" content="https://xn--sudoku-lser-yfb.de/images/preview.png" />
+  <meta property="og:url" content="https://xn--sudoku-lser-yfb.de/daily-sudoku.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tägliches Sudoku - Sudoku-Löser.de" />
+  <meta name="twitter:description"
+    content="Spielen Sie täglich ein neues Sudoku auf Sudoku-Löser.de. Jeden Tag eine neue Herausforderung." />
+  <meta name="twitter:image" content="https://xn--sudoku-lser-yfb.de/images/preview.png" />
+
+  <!-- Stylesheets - Using your existing styles -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Additional styles specific to Daily Sudoku -->
+  <style>
+
+:root {
+  --primary: #5D5CDE;
+  --primary-light: #8382e9;
+  --primary-dark: #4b4ab2;
+
+  --light-bg: #FFFFFF;
+  --light-card: #F9FAFB;
+  --light-text: #1F2937;
+  --light-border: #E5E7EB;
+
+  --dark-bg: #121212;
+  --dark-card: #242424;
+  --dark-text: #E5E7EB;
+  --dark-border: #4B5563;
+
+  --error: #EF4444;
+  --success: #10B981;
+}
+
+.dark {
+  --bg-color: var(--dark-bg);
+  --card-bg: var(--dark-card);
+  --text-color: var(--dark-text);
+  --border-color: var(--dark-border);
+}
+
+.light {
+  --bg-color: var(--light-bg);
+  --card-bg: var(--light-card);
+  --text-color: var(--light-text);
+  --border-color: var(--light-border);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: rgba(93, 92, 222, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-outline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sudoku grid styling */
+.sudoku-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.sudoku-grid {
+  display: grid;
+  gap: 1px;
+  border: 2px solid var(--text-color);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.sudoku-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  position: relative;
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+}
+
+.sudoku-cell.selected {
+  background-color: rgba(93, 92, 222, 0.2);
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.sudoku-cell.highlighted {
+  background-color: rgba(93, 92, 222, 0.1);
+}
+
+.sudoku-cell.invalid {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.sudoku-cell.active {
+  border-color: var(--primary);
+  border-width: 2px;
+}
+
+.sudoku-cell.solved {
+  animation: solved-pulse 1s ease-in-out;
+}
+
+@keyframes solved-pulse {
+  0% {
+    background-color: var(--card-bg);
+  }
+
+  50% {
+    background-color: rgba(16, 185, 129, 0.3);
+  }
+
+  100% {
+    background-color: var(--card-bg);
+  }
+}
+
+.sudoku-cell input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: clamp(0.875rem, 4vw, 1.25rem);
+  font-weight: 500;
+  outline: none;
+  cursor: text;
+}
+
+.sudoku-cell input:focus {
+  outline: none;
+}
+
+.sudoku-cell input.original {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.sudoku-cell input.solution {
+  color: var(--success);
+  animation: fade-in 0.5s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.border-bold-right {
+  border-right: 2px solid var(--text-color);
+}
+
+.border-bold-bottom {
+  border-bottom: 2px solid var(--text-color);
+}
+
+/* Loading animation */
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--primary-light);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-bottom-color: var(--primary);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark mode switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked+.slider {
+  background-color: var(--primary);
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+}
+
+/* Shake animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Success animation */
+@keyframes success-wave {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    transform: scale(1);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    transform: scale(1.05);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    transform: scale(1);
+  }
+}
+
+.success-wave {
+  animation: success-wave 1.5s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Custom select styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235D5CDE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Tabs */
+.tab {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Blog styling */
+.blog-card {
+  transition: all 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Team member cards */
+.team-card {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+.team-card .social-links {
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.team-card:hover .social-links {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+
+/* Blog Details CSS */
+
+/* BLOG READABILITY ENHANCEMENTS */
+.blog-detail-card {
+  max-width: 1200px; /* Keeps text in a comfortable reading width */
+  margin: 0 auto;   /* Centers the blog content */
+  padding: 2rem;
+  line-height: 1.7; /* Adds more line spacing for easier reading */
+}
+
+.blog-detail-card h2,
+.blog-detail-card h3,
+.blog-detail-card h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.blog-detail-card p {
+  margin-bottom: 1rem;
+  font-size: 1.125rem; /* Slightly larger than the base for readability */
+  color: var(--text-color);
+}
+
+.blog-detail-card ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-detail-card li {
+  margin-bottom: 0.5rem;
+}
+
+    /* Pencil marks (notes) styling */
+    .sudoku-cell .notes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      width: 100%;
+      height: 100%;
+      font-size: 0.5em;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+    
+    .sudoku-cell .notes span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Celebration animation */
+    @keyframes confetti {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100px) rotate(720deg);
+      }
+    }
+    
+    .confetti-container {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary);
+      opacity: 0;
+    }
+    
+    /* Difficulty badge colors */
+    .badge-easy {
+      background-color: #D1FAE5 !important;
+      color: #047857 !important;
+    }
+    
+    .dark .badge-easy {
+      background-color: #065F46 !important;
+      color: #A7F3D0 !important;
+    }
+    
+    .badge-medium {
+      background-color: #E0F2FE !important;
+      color: #0369A1 !important;
+    }
+    
+    .dark .badge-medium {
+      background-color: #075985 !important;
+      color: #BAE6FD !important;
+    }
+    
+    .badge-hard {
+      background-color: #FEF3C7 !important;
+      color: #B45309 !important;
+    }
+    
+    .dark .badge-hard {
+      background-color: #92400E !important;
+      color: #FDE68A !important;
+    }
+    
+    .badge-expert {
+      background-color: #FEE2E2 !important;
+      color: #B91C1C !important;
+    }
+    
+    .dark .badge-expert {
+      background-color: #991B1B !important;
+      color: #FECACA !important;
+    }
+    
+    /* Selection for number pad */
+    .number-selected {
+      background-color: var(--primary);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Notes mode indicator */
+    .notes-mode-active {
+      background-color: rgba(93, 92, 222, 0.2) !important;
+      border-color: var(--primary) !important;
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GL6NQYRK97"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-GL6NQYRK97');
+  </script>
+</head>
+
+<body>
+  <div class="min-h-screen flex flex-col">
+    <!-- HEADER -->
+    <header class="py-4 border-b border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+          <div class="flex items-center">
+            <a href="index.html">
+              <h1 class="text-2xl md:text-3xl font-bold">Sudoku-Löser.de</h1>
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <!-- Dark mode toggle -->
+            <div class="flex items-center space-x-2">
+              <span class="text-sm"><i class="fas fa-sun"></i></span>
+              <label class="switch">
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+              <span class="text-sm"><i class="fas fa-moon"></i></span>
+            </div>
+          </div>
+        </div>
+
+  
+      
+        <nav class="mt-4">
+          <ul class="flex overflow-x-auto space-x-2 md:space-x-4" role="tablist">
+            <li>
+              <a
+                href="index.html"
+                role="tab"
+                aria-selected="false"
+                class="tab inline-flex flex-none items-center px-4 py-2">
+                Löser
+              </a>
+            </li>
+            <li>
+              <a
+                href="daily-sudoku.html"
+                role="tab"
+                aria-selected="true"
+                class="tab inline-flex flex-none items-center px-4 py-2 active">
+                Tägliches Sudoku
+              </a>
+            </li>
+            <li>
+              <a
+                href="blog.html"
+                role="tab"
+                aria-selected="false"
+                class="tab inline-flex flex-none items-center px-4 py-2">
+                Blog
+              </a>
+            </li>
+            <!-- <li>
+              <a
+                href="about.html"
+                role="tab"
+                aria-selected="false"
+                class="tab inline-flex flex-none items-center px-4 py-2">
+                Über uns
+              </a>
+            </li> -->
+          </ul>
+        </nav>
+        
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="flex-grow py-6">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="card p-4">
+              <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Tägliches Sudoku - <span id="currentDate"></span></h2>
+                <div class="flex space-x-2 mt-2 md:mt-0">
+                  <div id="difficultyBadge" class="badge px-3 py-1 rounded-full text-sm flex items-center">
+                    Mittel
+                  </div>
+                  <div class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100 px-3 py-1 rounded-full text-sm flex items-center">
+                    <i class="fas fa-clock mr-1"></i> <span id="timer">00:00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sudoku Grid Container -->
+              <div id="sudokuContainer" class="sudoku-container">
+                <!-- Grid will be dynamically created here -->
+              </div>
+
+              <!-- Number Pad for Mobile -->
+              <div id="numberPad" class="grid grid-cols-5 gap-2 mt-4 max-w-xs mx-auto">
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="1">1</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="2">2</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="3">3</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="4">4</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="5">5</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="6">6</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="7">7</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="8">8</button>
+                <button class="number-btn btn-outline rounded-md py-2 px-0 flex items-center justify-center" data-number="9">9</button>
+                <button id="eraseBtn" class="btn-outline rounded-md py-2 px-0 flex items-center justify-center">
+                  <i class="fas fa-eraser"></i>
+                </button>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex flex-wrap justify-center gap-2 action-buttons mt-4">
+                <button id="notesBtn" class="btn-outline">
+                  <i class="fas fa-pencil-alt mr-1"></i> Notizen
+                </button>
+                <button id="checkBtn" class="btn-outline">
+                  <i class="fas fa-check-circle mr-1"></i> Prüfen
+                </button>
+                <button id="hintBtn" class="btn-outline">
+                  <i class="fas fa-lightbulb mr-1"></i> Tipp
+                </button>
+                <button id="resetBtn" class="btn-outline">
+                  <i class="fas fa-undo mr-1"></i> Zurücksetzen
+                </button>
+                <button id="printBtn" class="btn-outline">
+                  <i class="fas fa-print mr-1"></i> Drucken
+                </button>
+              </div>
+
+              <!-- Status / Loading -->
+              <div id="statusMessage" class="mt-4 text-center hidden p-3 rounded-md"></div>
+              <div id="loadingContainer" class="mt-4 flex justify-center items-center hidden">
+                <div class="loader"></div>
+                <div class="ml-3 text-lg" id="loadingMessage">
+                  Puzzle wird geladen...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Instructions / Stats -->
+          <div class="lg:col-span-1">
+            <div class="card p-4 mb-6">
+              <h2 class="text-xl font-bold mb-3">Tägliches Sudoku</h2>
+              <p class="mb-4">
+                Jeder Tag bringt ein neues Sudoku! Versuchen Sie, es schneller als gestern zu lösen.
+              </p>
+              <ul class="space-y-2">
+                <li><i class="fas fa-calendar-day mr-2 text-[var(--primary)]"></i> Die Rätsel ändern sich täglich um Mitternacht (deutsche Zeit)</li>
+                <li><i class="fas fa-users mr-2 text-[var(--primary)]"></i> Alle Spieler bekommen am selben Tag das identische Rätsel</li>
+                <li><i class="fas fa-brain mr-2 text-[var(--primary)]"></i> Die Schwierigkeit wird für jedes Tagesrätsel automatisch berechnet</li>
+                <li><i class="fas fa-keyboard mr-2 text-[var(--primary)]"></i> Tippen Sie Zahlen per Tastatur oder nutzen Sie das Nummernfeld</li>
+                <li><i class="fas fa-pencil-alt mr-2 text-[var(--primary)]"></i> Im Notizen-Modus können Sie kleine Zahlen als Gedächtnisstütze eintragen</li>
+              </ul>
+            </div>
+
+            <div class="card p-4 mb-6">
+              <h2 class="text-xl font-bold mb-3">Statistik</h2>
+              <div id="statsContainer" class="space-y-3">
+                <div class="flex justify-between items-center">
+                  <span>Heute abgeschlossen:</span>
+                  <span id="completedToday" class="font-bold">Nein</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>Beste Zeit:</span>
+                  <span id="bestTime" class="font-bold">--:--</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>Aktuelle Strähne:</span>
+                  <span id="currentStreak" class="font-bold">0 Tage</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>Längste Strähne:</span>
+                  <span id="longestStreak" class="font-bold">0 Tage</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>Insgesamt gelöst:</span>
+                  <span id="totalSolved" class="font-bold">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card p-4">
+              <h2 class="text-xl font-bold mb-3">Teilen</h2>
+              <p class="mb-3">Teilen Sie das heutige Sudoku mit Freunden:</p>
+              <div class="flex flex-wrap gap-2">
+                <button id="shareWhatsapp" class="btn-outline bg-green-500 hover:bg-green-600 text-white border-0">
+                  <i class="fab fa-whatsapp"></i>
+                </button>
+                <button id="shareFacebook" class="btn-outline bg-blue-600 hover:bg-blue-700 text-white border-0">
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+                <button id="shareTwitter" class="btn-outline bg-blue-400 hover:bg-blue-500 text-white border-0">
+                  <i class="fab fa-twitter"></i>
+                </button>
+                <button id="shareEmail" class="btn-outline bg-gray-500 hover:bg-gray-600 text-white border-0">
+                  <i class="fas fa-envelope"></i>
+                </button>
+                <button id="copyLink" class="btn-outline">
+                  <i class="fas fa-link mr-1"></i> Link kopieren
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto py-4 border-t border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-2 md:mb-0">
+            <p>&copy; <span id="year"></span>
+              <a href="index.html" class="text-blue-500 no-underline hover:no-underline">Sudoku-Löser.de</a>
+            </p>
+          </div>
+
+          <div class="flex space-x-4">
+           
+            <a href="datenschutzerklaerung.html"
+              class="text-[var(--text-color)] hover:text-[var(--primary)]">Datenschutz</a>
+            <a href="nutzungsbedingungen.html"
+              class="text-[var(--text-color)] hover:text-[var(--primary)]">Nutzungsbedingungen</a>
+            <a href="kontakt.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Kontakt</a>
+          </div>
+          <a href="about.html"
+            class="text-[var(--text-color)] hover:text-[var(--primary)]">Über uns</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Confetti container for celebrations -->
+    <div id="confettiContainer" class="confetti-container"></div>
+  </div>
+
+  <script>
+    // Dark mode based on preference
+    document.addEventListener("DOMContentLoaded", function () {
+      const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      if (prefersDarkMode) {
+        document.body.classList.add("dark");
+        darkModeToggle.checked = true;
+      } else {
+        document.body.classList.add("light");
+      }
+      darkModeToggle.addEventListener("change", function () {
+        document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
+      });
+
+      // Initialize Daily Sudoku
+      initDailySudoku();
+
+      // Set current year in footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+    });
+
+    // Set current date
+    function formatDate(date) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('de-DE', options);
+    }
+
+    // Global variables
+    let currentSize = 9; // Default size for daily sudoku
+    let currentGrid = [];
+    let originalGrid = [];
+    let solutionGrid = [];
+    let activeCell = null;
+    let solutionInProgress = false;
+    let cellElements = [];
+    let timerInterval = null;
+    let startTime = null;
+    let gameCompleted = false;
+    let hintsUsed = 0;
+    let notesMode = false;
+    let notesData = {};
+
+    // Determines subgrid dimensions based on the grid size
+    function getSubgridDimensions(size) {
+      let subgridWidth, subgridHeight;
+      if (size === 4) {
+        subgridWidth = subgridHeight = 2;
+      } else if (size === 6) {
+        subgridWidth = 3;
+        subgridHeight = 2;
+      } else if (size === 8) {
+        subgridWidth = 4;
+        subgridHeight = 2;
+      } else if (size === 9) {
+        subgridWidth = subgridHeight = 3;
+      } else if (size === 10) {
+        subgridWidth = 5;
+        subgridHeight = 2;
+      } else if (size === 12) {
+        subgridWidth = 4;
+        subgridHeight = 3;
+      } else if (size === 16) {
+        subgridWidth = subgridHeight = 4;
+      }
+      return { width: subgridWidth, height: subgridHeight };
+    }
+
+    // Generate a deterministic random number based on a seed
+    function seededRandom(seed) {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    // Get a seed based on the current day (German timezone)
+    function getDailySeed() {
+      const now = new Date();
+      const germanTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Berlin' }));
+      return germanTime.getFullYear() * 10000 + (germanTime.getMonth() + 1) * 100 + germanTime.getDate();
+    }
+
+    // Generate the daily sudoku grid
+    function generateDailySudoku() {
+      const dailySeed = getDailySeed();
+      let seed = dailySeed;
+      
+      // Create a base solved grid
+      const grid = Array(currentSize)
+        .fill()
+        .map(() => Array(currentSize).fill(0));
+      
+      // Fill the grid using a deterministic algorithm based on the seed
+      if (solveSudoku(grid)) {
+        // This is now a solved grid
+        solutionGrid = JSON.parse(JSON.stringify(grid));
+        
+        // Create a copy for removing cells
+        const puzzle = JSON.parse(JSON.stringify(grid));
+        
+        // Determine difficulty by how many cells to remove
+        const difficultyLevels = {
+          'Leicht': 0.4,    // 40% of cells removed
+          'Mittel': 0.55,   // 55% of cells removed
+          'Schwer': 0.65,   // 65% of cells removed
+          'Experte': 0.75   // 75% of cells removed
+        };
+        
+        // Determine today's difficulty (seeded by the day of the month)
+        const difficultyArray = ['Leicht', 'Mittel', 'Mittel', 'Schwer', 'Experte'];
+        const dayOfWeek = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+        const difficulty = dayOfWeek === 0 || dayOfWeek === 6 
+          ? 'Schwer' // Weekends are harder
+          : difficultyArray[Math.floor(seededRandom(dailySeed * 123) * difficultyArray.length)];
+        
+        // Set difficulty badge
+        const badge = document.getElementById('difficultyBadge');
+        badge.textContent = difficulty;
+        badge.className = "badge px-3 py-1 rounded-full text-sm flex items-center";
+        badge.classList.add(`badge-${difficulty.toLowerCase()}`);
+        
+        // Calculate cells to remove
+        const totalCells = currentSize * currentSize;
+        const cellsToRemove = Math.floor(totalCells * difficultyLevels[difficulty]);
+        
+        // Create an array of cell positions
+        const positions = [];
+        for (let r = 0; r < currentSize; r++) {
+          for (let c = 0; c < currentSize; c++) {
+            positions.push({ r, c });
+          }
+        }
+        
+        // Sort positions using seeded randomness
+        for (let i = positions.length - 1; i > 0; i--) {
+          const j = Math.floor(seededRandom(seed++) * (i + 1));
+          [positions[i], positions[j]] = [positions[j], positions[i]];
+        }
+        
+        // Remove cells while ensuring the puzzle still has a unique solution
+        for (let i = 0; i < cellsToRemove; i++) {
+          const { r, c } = positions[i];
+          const temp = puzzle[r][c];
+          puzzle[r][c] = 0;
+          
+          // For performance reasons, we don't check for a unique solution every time
+          // In a production app, you might want to check every few removals
+          /*
+          // Create a copy of the puzzle
+          const puzzleCopy = JSON.parse(JSON.stringify(puzzle));
+          // Check if the solution is still unique
+          if (!hasUniqueSolution(puzzleCopy)) {
+            puzzle[r][c] = temp; // Restore the value if removing it would result in multiple solutions
+          }
+          */
+        }
+        
+        originalGrid = JSON.parse(JSON.stringify(puzzle));
+        currentGrid = JSON.parse(JSON.stringify(puzzle));
+        
+        // Initialize notes data structure
+        notesData = {};
+        for (let r = 0; r < currentSize; r++) {
+          for (let c = 0; c < currentSize; c++) {
+            if (puzzle[r][c] === 0) {
+              const key = `${r},${c}`;
+              notesData[key] = [];
+            }
+          }
+        }
+        
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Initialize the daily sudoku
+    function initDailySudoku() {
+      document.getElementById('currentDate').textContent = formatDate(new Date());
+
+      // Button event listeners
+      document.getElementById('notesBtn').addEventListener('click', toggleNotesMode);
+      document.getElementById('checkBtn').addEventListener('click', checkValidity);
+      document.getElementById('hintBtn').addEventListener('click', giveHint);
+      document.getElementById('resetBtn').addEventListener('click', resetPuzzle);
+      document.getElementById('printBtn').addEventListener('click', printPuzzle);
+      
+      // Number pad
+      document.querySelectorAll('.number-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          if (!activeCell || gameCompleted) return;
+          
+          const number = parseInt(this.getAttribute('data-number'), 10);
+          handleNumberInput(number);
+        });
+      });
+      
+      document.getElementById('eraseBtn').addEventListener('click', function() {
+        if (!activeCell || gameCompleted) return;
+        
+        eraseActiveCell();
+      });
+      
+      // Share buttons
+      document.getElementById('shareWhatsapp').addEventListener('click', shareViaWhatsapp);
+      document.getElementById('shareFacebook').addEventListener('click', shareViaFacebook);
+      document.getElementById('shareTwitter').addEventListener('click', shareViaTwitter);
+      document.getElementById('shareEmail').addEventListener('click', shareViaEmail);
+      document.getElementById('copyLink').addEventListener('click', copyShareLink);
+
+      // Keyboard support
+      document.addEventListener('keydown', handleKeyboardInput);
+
+      // Load saved statistics
+      loadStatistics();
+      
+      // Show loading screen
+      showLoading(true, "Tägliches Sudoku wird generiert...");
+      
+      // Generate the daily sudoku
+      setTimeout(() => {
+        if (generateDailySudoku()) {
+          createGrid();
+          showLoading(false);
+          showStatus("Tägliches Sudoku für " + formatDate(new Date()) + " geladen!", false);
+          startTimer();
+        } else {
+          showLoading(false);
+          showStatus("Fehler beim Generieren des täglichen Sudokus.", true);
+        }
+      }, 1000);
+    }
+
+    // Handle keyboard input
+    function handleKeyboardInput(e) {
+      if (!activeCell || gameCompleted) return;
+      
+      const row = parseInt(activeCell.dataset.row);
+      const col = parseInt(activeCell.dataset.col);
+      
+      // Check if original cell (can't be edited)
+      if (originalGrid[row][col] !== 0) return;
+      
+      if (e.key >= '1' && e.key <= '9' && parseInt(e.key) <= currentSize) {
+        // Number input
+        handleNumberInput(parseInt(e.key));
+      } else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') {
+        // Erase
+        eraseActiveCell();
+      } else if (e.key === 'n') {
+        // Toggle notes mode
+        toggleNotesMode();
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        // Navigation
+        navigateWithArrows(e.key, row, col);
+        e.preventDefault();
+      }
+    }
+
+    // Navigate cells with arrow keys
+    function navigateWithArrows(key, row, col) {
+      let newRow = row;
+      let newCol = col;
+      
+      switch (key) {
+        case 'ArrowUp':
+          newRow = Math.max(0, row - 1);
+          break;
+        case 'ArrowDown':
+          newRow = Math.min(currentSize - 1, row + 1);
+          break;
+        case 'ArrowLeft':
+          newCol = Math.max(0, col - 1);
+          break;
+        case 'ArrowRight':
+          newCol = Math.min(currentSize - 1, col + 1);
+          break;
+      }
+      
+      if (newRow !== row || newCol !== col) {
+        const cell = cellElements[newRow][newCol];
+        cell.click();
+      }
+    }
+
+    // Handle number input (from keyboard or number pad)
+    function handleNumberInput(number) {
+      if (!activeCell) return;
+      
+      const row = parseInt(activeCell.dataset.row);
+      const col = parseInt(activeCell.dataset.col);
+      
+      // Check if original cell (can't be edited)
+      if (originalGrid[row][col] !== 0) return;
+      
+      if (notesMode) {
+        // Toggle note
+        const key = `${row},${col}`;
+        const input = activeCell.querySelector('input');
+        const notesContainer = activeCell.querySelector('.notes');
+        
+        if (!notesData[key]) {
+          notesData[key] = [];
+        }
+        
+        const index = notesData[key].indexOf(number);
+        if (index === -1) {
+          notesData[key].push(number);
+        } else {
+          notesData[key].splice(index, 1);
+        }
+        
+        // Clear input value
+        input.value = '';
+        currentGrid[row][col] = 0;
+        
+        // Update notes display
+        updateNotes(row, col);
+      } else {
+        // Regular number input
+        const input = activeCell.querySelector('input');
+        
+        // Clear existing notes
+        const key = `${row},${col}`;
+        notesData[key] = [];
+        const notesContainer = activeCell.querySelector('.notes');
+        if (notesContainer) {
+          notesContainer.innerHTML = '';
+        }
+        
+        // Set value
+        input.value = number;
+        currentGrid[row][col] = number;
+        
+        // Validate
+        validateCell(row, col, number);
+        
+        // Check if the grid is completed
+        if (isGridComplete() && isGridValid()) {
+          gameCompleted = true;
+          stopTimer();
+          saveCompletion();
+          showSuccess();
+        }
+      }
+    }
+
+    // Erase the active cell
+    function eraseActiveCell() {
+      if (!activeCell) return;
+      
+      const row = parseInt(activeCell.dataset.row);
+      const col = parseInt(activeCell.dataset.col);
+      
+      // Check if original cell (can't be edited)
+      if (originalGrid[row][col] !== 0) return;
+      
+      const input = activeCell.querySelector('input');
+      input.value = '';
+      currentGrid[row][col] = 0;
+      
+      // Clear notes too
+      const key = `${row},${col}`;
+      notesData[key] = [];
+      
+      const notesContainer = activeCell.querySelector('.notes');
+      if (notesContainer) {
+        notesContainer.innerHTML = '';
+      }
+      
+      activeCell.classList.remove('invalid');
+    }
+
+    // Toggle notes mode
+    function toggleNotesMode() {
+      notesMode = !notesMode;
+      const notesBtn = document.getElementById('notesBtn');
+      
+      if (notesMode) {
+        notesBtn.classList.add('notes-mode-active');
+      } else {
+        notesBtn.classList.remove('notes-mode-active');
+      }
+      
+      showStatus(notesMode ? "Notiz-Modus aktiviert" : "Normaler Modus aktiviert", false);
+    }
+
+    // Update notes in a cell
+    function updateNotes(row, col) {
+      const cell = cellElements[row][col];
+      let notesContainer = cell.querySelector('.notes');
+      
+      if (!notesContainer) {
+        notesContainer = document.createElement('div');
+        notesContainer.className = 'notes';
+        cell.appendChild(notesContainer);
+      }
+      
+      notesContainer.innerHTML = '';
+      
+      const key = `${row},${col}`;
+      const notes = notesData[key] || [];
+      
+      // Create a 3x3 grid regardless of how many notes there are
+      for (let i = 1; i <= 9; i++) {
+        const noteSpan = document.createElement('span');
+        noteSpan.textContent = notes.includes(i) ? i : '';
+        notesContainer.appendChild(noteSpan);
+      }
+    }
+
+    // Create the sudoku grid UI
+    function createGrid() {
+      // Reset cell elements cache
+      cellElements = [];
+      
+      // Get subgrid dimensions
+      const { width: subgridWidth, height: subgridHeight } = getSubgridDimensions(currentSize);
+      
+      const container = document.getElementById("sudokuContainer");
+      container.innerHTML = "";
+
+      const grid = document.createElement("div");
+      grid.className = "sudoku-grid";
+
+      const cellSize = Math.min(
+        Math.floor((window.innerWidth * 0.8) / currentSize),
+        50
+      );
+      grid.style.gridTemplateColumns = `repeat(${currentSize}, ${cellSize}px)`;
+      grid.style.gridTemplateRows = `repeat(${currentSize}, ${cellSize}px)`;
+
+      for (let row = 0; row < currentSize; row++) {
+        const rowCells = [];
+        for (let col = 0; col < currentSize; col++) {
+          const cell = document.createElement("div");
+          cell.className = "sudoku-cell";
+          cell.dataset.row = row;
+          cell.dataset.col = col;
+
+          // Apply border classes for subgrid separation
+          if ((col + 1) % subgridWidth === 0 && col < currentSize - 1) {
+            cell.classList.add("border-bold-right");
+          }
+          if ((row + 1) % subgridHeight === 0 && row < currentSize - 1) {
+            cell.classList.add("border-bold-bottom");
+          }
+
+          const input = document.createElement("input");
+          input.type = "text";
+          input.inputMode = "numeric"; // Suggests a numeric keypad on mobile
+          input.pattern = "[0-9]*";    // Helps mobile browsers validate numeric input
+          input.maxLength = currentSize > 9 ? 2 : 1;
+          input.readOnly = false;
+
+          // Fill in original values
+          if (originalGrid[row][col] !== 0) {
+            input.value = originalGrid[row][col];
+            input.classList.add("original");
+            input.readOnly = true; // Original cells can't be edited
+          }
+
+          // Attach event listeners
+          cell.addEventListener("click", function () {
+            if (gameCompleted || input.readOnly) return;
+            if (activeCell) activeCell.classList.remove("active");
+            activeCell = this;
+            this.classList.add("active");
+            highlightRelatedCells(row, col);
+            
+            // Update number pad selection
+            updateNumberPadSelection(currentGrid[row][col]);
+          });
+
+          // For mobile, prevent keyboard from showing
+          input.addEventListener("focus", function(e) {
+            this.blur();
+          });
+
+          cell.appendChild(input);
+          
+          // Add notes container if needed
+          const key = `${row},${col}`;
+          if (notesData[key] && notesData[key].length > 0) {
+            updateNotes(row, col);
+          }
+          
+          grid.appendChild(cell);
+          rowCells.push(cell);
+        }
+        cellElements.push(rowCells);
+      }
+
+      container.appendChild(grid);
+      activeCell = null;
+    }
+
+    // Update number pad selection
+    function updateNumberPadSelection(num) {
+      // Clear all selections
+      document.querySelectorAll('.number-btn').forEach(btn => {
+        btn.classList.remove('number-selected');
+      });
+      
+      // Select the active number
+      if (num > 0) {
+        const numBtn = document.querySelector(`.number-btn[data-number="${num}"]`);
+        if (numBtn) {
+          numBtn.classList.add('number-selected');
+        }
+      }
+    }
+
+    // Validate if a cell value is valid in the grid
+    function validateCell(row, col, num) {
+      let isValid = true;
+      const { width: subgridWidth, height: subgridHeight } = getSubgridDimensions(currentSize);
+      
+      // Validate row
+      for (let c = 0; c < currentSize; c++) {
+        if (c !== col && currentGrid[row][c] === num) {
+          isValid = false;
+          cellElements[row][c].classList.add("invalid");
+        }
+      }
+      
+      // Validate column
+      for (let r = 0; r < currentSize; r++) {
+        if (r !== row && currentGrid[r][col] === num) {
+          isValid = false;
+          cellElements[r][col].classList.add("invalid");
+        }
+      }
+      
+      // Validate subgrid
+      const boxRow = Math.floor(row / subgridHeight) * subgridHeight;
+      const boxCol = Math.floor(col / subgridWidth) * subgridWidth;
+      for (let r = boxRow; r < boxRow + subgridHeight; r++) {
+        for (let c = boxCol; c < boxCol + subgridWidth; c++) {
+          if ((r !== row || c !== col) && currentGrid[r][c] === num) {
+            isValid = false;
+            cellElements[r][c].classList.add("invalid");
+          }
+        }
+      }
+      
+      // Toggle the invalid class on the current cell
+      cellElements[row][col].classList.toggle("invalid", !isValid);
+      return isValid;
+    }
+
+    // Highlight related cells (row, column, subgrid) of an active cell
+    function highlightRelatedCells(row, col) {
+      resetCellHighlighting();
+      const { width: subgridWidth, height: subgridHeight } = getSubgridDimensions(currentSize);
+      
+      // Highlight row
+      for (let c = 0; c < currentSize; c++) {
+        if (c !== col) {
+          cellElements[row][c].classList.add("highlighted");
+        }
+      }
+      
+      // Highlight column
+      for (let r = 0; r < currentSize; r++) {
+        if (r !== row) {
+          cellElements[r][col].classList.add("highlighted");
+        }
+      }
+      
+      // Highlight subgrid
+      const boxRow = Math.floor(row / subgridHeight) * subgridHeight;
+      const boxCol = Math.floor(col / subgridWidth) * subgridWidth;
+      for (let r = boxRow; r < boxRow + subgridHeight; r++) {
+        for (let c = boxCol; c < boxCol + subgridWidth; c++) {
+          if (r !== row || c !== col) {
+            cellElements[r][c].classList.add("highlighted");
+          }
+        }
+      }
+      
+      // Also highlight cells with the same value (except 0)
+      const value = currentGrid[row][col];
+      if (value !== 0) {
+        for (let r = 0; r < currentSize; r++) {
+          for (let c = 0; c < currentSize; c++) {
+            if ((r !== row || c !== col) && currentGrid[r][c] === value) {
+              cellElements[r][c].classList.add("highlighted");
+            }
+          }
+        }
+      }
+    }
+
+    // Reset highlighting of all cells
+    function resetCellHighlighting() {
+      document.querySelectorAll(".sudoku-cell.highlighted").forEach((cell) => {
+        cell.classList.remove("highlighted");
+      });
+      if (activeCell) {
+        activeCell.classList.remove("active");
+      }
+    }
+
+    // Check if the grid is completely filled
+    function isGridComplete() {
+      for (let row = 0; row < currentSize; row++) {
+        for (let col = 0; col < currentSize; col++) {
+          if (currentGrid[row][col] === 0) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    // Check if the grid is valid (no conflicts)
+    function isGridValid() {
+      // Check each cell for validity
+      for (let row = 0; row < currentSize; row++) {
+        for (let col = 0; col < currentSize; col++) {
+          if (currentGrid[row][col] !== 0) {
+            // Temporary remove value to check against all other cells
+            const val = currentGrid[row][col];
+            currentGrid[row][col] = 0;
+            const isValid = isValidValue(currentGrid, row, col, val);
+            currentGrid[row][col] = val; // Restore value
+            
+            if (!isValid) {
+              return false;
+            }
+          }
+        }
+      }
+      return true;
+    }
+
+    // Check the validity of the current grid
+    function checkValidity() {
+      showLoading(true, "Sudoku wird überprüft...");
+      setTimeout(() => {
+        document.querySelectorAll(".sudoku-cell").forEach((cell) => {
+          cell.classList.remove("invalid");
+        });
+
+        let hasInvalid = false;
+        for (let row = 0; row < currentSize; row++) {
+          for (let col = 0; col < currentSize; col++) {
+            if (currentGrid[row][col] !== 0) {
+              const valid = validateCell(row, col, currentGrid[row][col]);
+              if (!valid) hasInvalid = true;
+            }
+          }
+        }
+        showLoading(false);
+
+        if (hasInvalid) {
+          showStatus("Das Sudoku enthält Konflikte! Rote Felder zeigen Duplikate.", true);
+          document.querySelectorAll(".sudoku-cell.invalid").forEach((cell) => {
+            cell.classList.add("shake");
+            setTimeout(() => cell.classList.remove("shake"), 500);
+          });
+        } else {
+          const emptyCells = countEmptyCells();
+          if (emptyCells === 0) {
+            showStatus("Gratulation! Das Sudoku ist vollständig und korrekt gelöst!", false);
+            document.querySelector(".sudoku-grid").classList.add("success-wave");
+            setTimeout(() => {
+              document.querySelector(".sudoku-grid").classList.remove("success-wave");
+            }, 1500);
+            
+            gameCompleted = true;
+            stopTimer();
+            saveCompletion();
+            showSuccess();
+          } else {
+            showStatus(`Bisher ist alles korrekt! Noch ${emptyCells} Felder zu füllen.`, false);
+          }
+        }
+      }, 500);
+    }
+
+    // Give a hint by filling in one correct cell
+    function giveHint() {
+      if (gameCompleted) {
+        showStatus("Das Sudoku ist bereits gelöst!", false);
+        return;
+      }
+      
+      showLoading(true, "Tipp wird gesucht...");
+      setTimeout(() => {
+        // Find all empty cells
+        const emptyCells = [];
+        for (let row = 0; row < currentSize; row++) {
+          for (let col = 0; col < currentSize; col++) {
+            if (currentGrid[row][col] === 0) {
+              emptyCells.push({ row, col });
+            }
+          }
+        }
+        
+        if (emptyCells.length === 0) {
+          showLoading(false);
+          showStatus("Keine leeren Felder mehr!", false);
+          return;
+        }
+        
+        // Pick a random empty cell
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const { row, col } = emptyCells[randomIndex];
+        
+        // Fill in with the correct value from the solution
+        currentGrid[row][col] = solutionGrid[row][col];
+        const cell = cellElements[row][col];
+        const input = cell.querySelector('input');
+        
+        // Clear any notes
+        const key = `${row},${col}`;
+        notesData[key] = [];
+        const notesContainer = cell.querySelector('.notes');
+        if (notesContainer) {
+          notesContainer.innerHTML = '';
+        }
+        
+        cell.classList.add("selected");
+        input.value = solutionGrid[row][col];
+        input.classList.add("solution");
+        
+        setTimeout(() => {
+          cell.classList.remove("selected");
+          cell.classList.add("solved");
+          setTimeout(() => {
+            cell.classList.remove("solved");
+          }, 1000);
+        }, 200);
+        
+        hintsUsed++;
+        showLoading(false);
+        showStatus(`Tipp: ${solutionGrid[row][col]} in Zeile ${row + 1}, Spalte ${col + 1}`, false);
+        
+        // Check if the grid is completed
+        if (isGridComplete() && isGridValid()) {
+          gameCompleted = true;
+          stopTimer();
+          saveCompletion();
+          showSuccess();
+        }
+      }, 500);
+    }
+
+    // Reset the puzzle to its original state
+    function resetPuzzle() {
+      showLoading(true, "Sudoku wird zurückgesetzt...");
+      setTimeout(() => {
+        currentGrid = JSON.parse(JSON.stringify(originalGrid));
+        for (let row = 0; row < currentSize; row++) {
+          for (let col = 0; col < currentSize; col++) {
+            const cell = cellElements[row][col];
+            const input = cell.querySelector('input');
+            
+            // Reset all non-original cells
+            if (originalGrid[row][col] === 0) {
+              input.value = "";
+              input.classList.remove("solution");
+              
+              // Clear notes
+              const key = `${row},${col}`;
+              notesData[key] = [];
+              const notesContainer = cell.querySelector('.notes');
+              if (notesContainer) {
+                notesContainer.innerHTML = '';
+              }
+            }
+            
+            cell.classList.remove("invalid", "active", "highlighted", "selected", "solved");
+          }
+        }
+        
+        activeCell = null;
+        gameCompleted = false;
+        hintsUsed = 0;
+        notesMode = false;
+        document.getElementById('notesBtn').classList.remove('notes-mode-active');
+        
+        resetTimer();
+        
+        showLoading(false);
+        showStatus("Sudoku wurde auf den ursprünglichen Zustand zurückgesetzt.", false);
+      }, 500);
+    }
+
+    // Print the current sudoku
+    function printPuzzle() {
+      window.print();
+    }
+
+    // Count the empty cells in the grid
+    function countEmptyCells() {
+      let count = 0;
+      for (let row = 0; row < currentSize; row++) {
+        for (let col = 0; col < currentSize; col++) {
+          if (currentGrid[row][col] === 0) count++;
+        }
+      }
+      return count;
+    }
+
+    // The sudoku solving algorithm
+    function solveSudoku(grid) {
+      const cell = findEmptyCell(grid);
+      if (!cell) return true; // No empty cells left means the puzzle is solved
+      
+      const { row, col } = cell;
+      
+      // Create a shuffled array of numbers 1-N based on the seed
+      const nums = Array.from({ length: currentSize }, (_, i) => i + 1);
+      const seed = getDailySeed() + row * 10 + col;
+      for (let i = nums.length - 1; i > 0; i--) {
+        const j = Math.floor(seededRandom(seed + i) * (i + 1));
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+      }
+      
+      for (let numIndex = 0; numIndex < nums.length; numIndex++) {
+        const num = nums[numIndex];
+        if (isValidValue(grid, row, col, num)) {
+          grid[row][col] = num;
+          if (solveSudoku(grid)) return true;
+          grid[row][col] = 0; // Backtrack
+        }
+      }
+      
+      return false;
+    }
+
+    // Find the best empty cell to fill next (most constrained)
+    function findEmptyCell(grid) {
+      let bestCell = null;
+      let minPoss = currentSize + 1;
+      
+      for (let row = 0; row < currentSize; row++) {
+        for (let col = 0; col < currentSize; col++) {
+          if (grid[row][col] === 0) {
+            let count = 0;
+            for (let n = 1; n <= currentSize; n++) {
+              if (isValidValue(grid, row, col, n)) count++;
+            }
+            
+            if (count < minPoss) {
+              minPoss = count;
+              bestCell = { row, col };
+              if (count === 1) return bestCell; // If there's only one possibility, return immediately
+            }
+          }
+        }
+      }
+      
+      return bestCell;
+    }
+
+    // Check if a value is valid in a specific position
+    function isValidValue(grid, row, col, num) {
+      const { width: subgridWidth, height: subgridHeight } = getSubgridDimensions(currentSize);
+      
+      // Check row
+      for (let c = 0; c < currentSize; c++) {
+        if (grid[row][c] === num) return false;
+      }
+      
+      // Check column
+      for (let r = 0; r < currentSize; r++) {
+        if (grid[r][col] === num) return false;
+      }
+      
+      // Check subgrid
+      const boxRow = Math.floor(row / subgridHeight) * subgridHeight;
+      const boxCol = Math.floor(col / subgridWidth) * subgridWidth;
+      
+      for (let r = boxRow; r < boxRow + subgridHeight; r++) {
+        for (let c = boxCol; c < boxCol + subgridWidth; c++) {
+          if (grid[r][c] === num) return false;
+        }
+      }
+      
+      return true;
+    }
+
+    // Timer functions
+    function startTimer() {
+      if (timerInterval) return; // Timer already running
+      
+      startTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+      updateTimer(); // Call immediately to avoid delay
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      document.getElementById('timer').textContent = "00:00";
+      startTimer();
+    }
+
+    function updateTimer() {
+      if (!startTime) return;
+      
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      const minutes = Math.floor(elapsedSeconds / 60);
+      const seconds = elapsedSeconds % 60;
+      
+      document.getElementById('timer').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Format time in minutes:seconds
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Show loading indicator
+    function showLoading(show, message = "Lädt...") {
+      const loadingContainer = document.getElementById("loadingContainer");
+      const loadingMessage = document.getElementById("loadingMessage");
+      
+      if (show) {
+        loadingMessage.textContent = message;
+        loadingContainer.classList.remove("hidden");
+      } else {
+        loadingContainer.classList.add("hidden");
+      }
+    }
+
+    // Show status message
+    function showStatus(msg, isError) {
+      const statusMessage = document.getElementById("statusMessage");
+      
+      if (!msg) {
+        statusMessage.classList.add("hidden");
+        return;
+      }
+      
+      statusMessage.textContent = msg;
+      statusMessage.className = "mt-4 text-center p-3 rounded-md";
+
+      if (isError) {
+        statusMessage.classList.add(
+          "bg-red-100", "text-red-700", "dark:bg-red-900", "dark:text-red-200"
+        );
+        statusMessage.classList.add("shake");
+        setTimeout(() => {
+          statusMessage.classList.remove("shake");
+        }, 500);
+      } else {
+        statusMessage.classList.add(
+          "bg-green-100", "text-green-700", "dark:bg-green-900", "dark:text-green-200"
+        );
+        // Auto-hide success messages after 4 seconds
+        setTimeout(() => {
+          statusMessage.classList.add("hidden");
+        }, 4000);
+      }
+      
+      statusMessage.classList.remove("hidden");
+    }
+
+    // Save statistics when a game is completed
+    function saveCompletion() {
+      if (!startTime) return;
+      
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      const today = new Date().toLocaleDateString('de-DE');
+      
+      // Load existing stats
+      let stats = JSON.parse(localStorage.getItem('dailySudokuStats') || '{}');
+      
+      // Initialize if first time
+      if (!stats.completedDays) {
+        stats.completedDays = [];
+        stats.bestTimes = {};
+        stats.currentStreak = 0;
+        stats.longestStreak = 0;
+        stats.totalSolved = 0;
+      }
+      
+      // Add today if not already completed
+      if (!stats.completedDays.includes(today)) {
+        stats.completedDays.push(today);
+        stats.totalSolved++;
+        
+        // Update best time
+        if (!stats.bestTimes[today] || elapsedSeconds < stats.bestTimes[today]) {
+          stats.bestTimes[today] = elapsedSeconds;
+        }
+        
+        // Calculate streak
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayStr = yesterday.toLocaleDateString('de-DE');
+        
+        if (stats.completedDays.includes(yesterdayStr)) {
+          stats.currentStreak++;
+        } else {
+          stats.currentStreak = 1; // Start new streak
+        }
+        
+        if (stats.currentStreak > stats.longestStreak) {
+          stats.longestStreak = stats.currentStreak;
+        }
+        
+        // Save updated stats
+        localStorage.setItem('dailySudokuStats', JSON.stringify(stats));
+        
+        // Update UI
+        updateStatsUI(stats);
+      }
+    }
+
+    // Load and display statistics
+    function loadStatistics() {
+      const stats = JSON.parse(localStorage.getItem('dailySudokuStats') || '{}');
+      updateStatsUI(stats);
+    }
+
+    // Update the statistics UI
+    function updateStatsUI(stats) {
+      if (!stats.completedDays) return;
+      
+      const today = new Date().toLocaleDateString('de-DE');
+      
+      // Update completed today
+      document.getElementById('completedToday').textContent = 
+        stats.completedDays.includes(today) ? "Ja" : "Nein";
+      
+      // Update best time
+      let bestTime = "–:–";
+      let bestTimes = Object.values(stats.bestTimes);
+      if (bestTimes.length > 0) {
+        const best = Math.min(...bestTimes);
+        bestTime = formatTime(best);
+      }
+      document.getElementById('bestTime').textContent = bestTime;
+      
+      // Update streaks
+      document.getElementById('currentStreak').textContent = `${stats.currentStreak} Tage`;
+      document.getElementById('longestStreak').textContent = `${stats.longestStreak} Tage`;
+      
+      // Update total solved
+      document.getElementById('totalSolved').textContent = stats.totalSolved;
+    }
+
+    // Show success message and celebration when puzzle is completed
+    function showSuccess() {
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      const timeStr = formatTime(elapsedSeconds);
+      
+      showStatus(`Gratulation! Sie haben das tägliche Sudoku in ${timeStr} gelöst!`, false);
+      
+      document.querySelector(".sudoku-grid").classList.add("success-wave");
+      setTimeout(() => {
+        document.querySelector(".sudoku-grid").classList.remove("success-wave");
+      }, 1500);
+      
+      // Display confetti celebration
+      createConfetti();
+    }
+
+    // Create confetti celebration effect
+    function createConfetti() {
+      const confettiContainer = document.getElementById('confettiContainer');
+      confettiContainer.innerHTML = '';
+      
+      const colors = ['#5D5CDE', '#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF'];
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        
+        // Random position
+        const left = Math.random() * 100;
+        const top = Math.random() * -50;
+        
+        // Random size
+        const size = Math.random() * 10 + 5;
+        
+        // Random color
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Random shape
+        const shape = Math.random() > 0.5 ? '50%' : '0';
+        
+        // Set properties
+        confetti.style.left = `${left}%`;
+        confetti.style.top = `${top}px`;
+        confetti.style.width = `${size}px`;
+        confetti.style.height = `${size}px`;
+        confetti.style.backgroundColor = color;
+        confetti.style.borderRadius = shape;
+        
+        // Animation
+        const duration = Math.random() * 2 + 1;
+        const delay = Math.random() * 1;
+        
+        confetti.style.animation = `confetti ${duration}s ease-out ${delay}s forwards`;
+        
+        confettiContainer.appendChild(confetti);
+      }
+    }
+
+    // Social sharing functions
+    function shareViaWhatsapp() {
+      const text = `Ich habe das tägliche Sudoku auf Sudoku-Löser.de gelöst! Versuche es auch: ${window.location.href}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function shareViaFacebook() {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareViaTwitter() {
+      const text = `Ich habe das tägliche Sudoku auf Sudoku-Löser.de gelöst! Versuche es auch! #Sudoku #Rätsel`;
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareViaEmail() {
+      const subject = "Tägliches Sudoku auf Sudoku-Löser.de";
+      const body = `Schau dir das tägliche Sudoku auf Sudoku-Löser.de an: ${window.location.href}`;
+      window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    }
+
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showStatus("Link in die Zwischenablage kopiert!", false);
+      }).catch(err => {
+        console.error('Fehler beim Kopieren: ', err);
+        showStatus("Fehler beim Kopieren des Links.", true);
+      });
+    }
+
+    // Handle resize events to adjust the grid
+    window.addEventListener("resize", function () {
+      const container = document.getElementById("sudokuContainer");
+      if (container && container.querySelector(".sudoku-grid")) {
+        const grid = container.querySelector(".sudoku-grid");
+        const cellSize = Math.min(
+          Math.floor((window.innerWidth * 0.8) / currentSize),
+          50
+        );
+        grid.style.gridTemplateColumns = `repeat(${currentSize}, ${cellSize}px)`;
+        grid.style.gridTemplateRows = `repeat(${currentSize}, ${cellSize}px)`;
+      }
+    });
+  </script>
+</body>
+
+</html>

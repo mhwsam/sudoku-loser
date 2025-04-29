@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO Meta Tags -->
-  <title>Sudoku-Löser.de – Dein Online Sudoku Solver & Lösungshelfer</title>
-  <meta name="description" content="Sudoku online lösen – schnell & einfach mit Sudoku-Löser.de. Unterstützt 4x4 bis 16x16. Mit Tipps, Strategien & Blog für alle Levels." />
-
+  <title>Sudoku-Löser.de – Dein Schlüssel zur schnellen Sudoku-Lösung</title>
+  <meta name="description"
+    content="Löse Sudoku-Rätsel schnell und einfach auf Sudoku-Löser.de. Unterstützt verschiedene Größen (4×4, 6×6, 8×8, 9×9, 10×10, 12×12, 16×16). Entdecke Blog-Artikel, Tipps und Strategien für Anfänger und Profis." />
   <meta name="keywords"
     content="Sudoku Löser, Sudoku Solver, Sudoku online lösen, Sudoku Strategie, Sudoku Lösung, Sudoku Tricks, Sudoku Generator, Sudoku für Anfänger, Sudoku für Profis, Sudoku Rätsel, Sudoku Blog, Sudoku Techniken, Sudoku mit Lösung, Sudoku kostenlos lösen, Sudoku Checker, Sudoku Rechner, Sudoku Tipps, Sudoku Solver mit Schritten, Sudoku Mehrgrößen, Sudoku AI, Sudoku Algorithmus, 4x4 Sudoku, 6x6 Sudoku, 9x9 Sudoku, 16x16 Sudoku" />
   <meta name="author" content="Sudoku-Löser.de" />
@@ -36,6 +36,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <link rel="stylesheet" href="styles.css">
+
+  <!-- 1mash pore remove kore dibo -->
+
+  <style>
+    .new-badge {
+      color: #00ff00; /* Yellow for visibility */
+      font-size: 0.6rem; /* Small superscript size */
+      font-weight: bold;
+      margin-left: 4px;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+    }
+    </style>
+
+    <!-- 1mash pore remove kore dibo -->
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GL6NQYRK97"></script>
@@ -89,16 +112,34 @@
                 Löser
               </button>
             </li>
+            <!-- 1mash pore remove kore dibo -->
+            <!-- <li>
+              <a href="sudoku-kostenlos-spielen.html" class="tab flex items-center">
+                Tägliches Sudoku
+              
+              </a>
+            </li> -->
             <li>
-              <button id="blogTab" class="tab" role="tab" aria-selected="false" aria-controls="blogPanel">
+              <a href="sudoku-kostenlos-spielen.html" class="tab flex items-center">
+                Tägliches Sudoku
+                <sup class="new-badge">New</sup>
+              </a>
+            </li>
+            <!-- 1mash pore remove kore dibo -->
+           
+            <li>
+              <a href="blog.html" class="tab flex items-center">
                 Blog
-              </button>
+              
+              </a>
             </li>
-            <li>
-              <button id="aboutTab" class="tab" role="tab" aria-selected="false" aria-controls="aboutPanel">
+            <!-- <li>
+              <a href="about.html" class="tab flex items-center">
                 Über uns
-              </button>
-            </li>
+              
+              </a>
+            </li> -->
+            
           </ul>
         </nav>
       </div>
@@ -216,10 +257,10 @@
                 <div class="space-y-2">
                   <p>1. Wählen Sie eine Rastergröße aus dem Dropdown-Menü.</p>
                   <p>2. Klicken Sie auf ein Feld und geben Sie eine Zahl über die Tastatur ein (leer = 0).</p>
-                  <p>3. Klicken Sie auf „Sudoku lösen“, um die Lösung zu finden.</p>
-                  <p>4. Nutzen Sie „Spielfeld leeren“, um das Raster zurückzusetzen, oder „Beispiel“, um ein
+                  <p>3. Klicken Sie auf "Sudoku lösen", um die Lösung zu finden.</p>
+                  <p>4. Nutzen Sie "Spielfeld leeren", um das Raster zurückzusetzen, oder "Beispiel", um ein
                     Muster-Sudoku zu laden.</p>
-                  <p>5. Klicken Sie auf „Lösung drucken“, um den Druckdialog des Browsers zu öffnen (nach dem Lösen).
+                  <p>5. Klicken Sie auf "Lösung drucken", um den Druckdialog des Browsers zu öffnen (nach dem Lösen).
                   </p>
                 </div>
               </div>
@@ -314,7 +355,7 @@
                 <p>🧠 <strong>Teste verschiedene Techniken:</strong> Techniken wie "Naked Pairs" oder "X-Wing" helfen
                   bei schweren Rätseln.</p>
               </div>
-            </div>
+            </div> 
 
 
             <div class="card p-4 mb-6">
@@ -497,152 +538,7 @@
           </div>
         </section>
 
-        <!-- About Panel -->
-        <section id="aboutPanel" class="tab-panel hidden" role="tabpanel" aria-labelledby="aboutTab">
-          <div class="max-w-4xl mx-auto">
-            <div class="card p-6 mb-8">
-              <h2 class="text-2xl font-bold mb-4">Über unseren Sudoku-Löser</h2>
-              <p class="mb-4">
-                Willkommen bei unserem erweiterten Multi-Größen Sudoku-Löser! Dieses Tool
-                löst Sudoku-Rätsel in verschiedenen Größen, von 4×4 bis 16×16.
-              </p>
-
-
-              <div class="mb-6">
-                <h3 class="text-xl font-bold mb-3">Hauptmerkmale</h3>
-                <ul class="list-disc pl-6 space-y-2">
-                  <li>Unterstützung für mehrere Rastergrößen</li>
-                  <li>Schnelle Lösung durch Backtracking & Constraint-Propagation</li>
-                  <li>Benutzerfreundliche Oberfläche & animierte Lösungen</li>
-                  <li>Gültigkeitsprüfungen & Puzzle-Import</li>
-                  <li>Dunkelmodus & responsives Design</li>
-                </ul>
-              </div>
-
-
-              <div class="mb-6">
-                <h3 class="text-xl font-bold mb-3">Wie es funktioniert</h3>
-                <ol class="list-decimal pl-6 space-y-2 mt-2">
-                  <li><strong>Constraint-Propagation</strong></li>
-                  <li><strong>Heuristik der am stärksten eingeschränkten Variablen</strong></li>
-                  <li><strong>Backtracking</strong></li>
-                  <li><strong>Lösungsvisualisierung</strong></li>
-                </ol>
-              </div>
-
-
-              <p>
-                Unser Löser bewältigt die anspruchsvollsten Sudoku-Rätsel und bietet
-                eine reibungslose, interaktive Erfahrung.
-              </p>
-
-            </div>
-
-            <div class="card p-6 mb-8">
-              <h2 class="text-2xl font-bold mb-6">Unser Team</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="team-card card overflow-hidden">
-                  <img src="https://picsum.photos/seed/person1/300/300" alt="Team Member"
-                    class="w-full h-48 object-cover" />
-                  <div class="p-4 text-center">
-                    <h3 class="text-lg font-bold">Mahadi</h3>
-                    <p class="text-sm opacity-75 mb-3">Lead Developer</p>
-                    <p class="mb-4">
-                      Algorithmenspezialist, der die Lösungs-Engine entwickelt hat.
-                    </p>
-                    <!-- <div class="social-links flex justify-center space-x-3">
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-linkedin"></i></a>
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-github"></i></a>
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-twitter"></i></a>
-                    </div> -->
-                  </div>
-                </div>
-
-                <div class="team-card card overflow-hidden">
-                  <img src="https://picsum.photos/seed/person2/300/300" alt="Team Member"
-                    class="w-full h-48 object-cover" />
-                  <div class="p-4 text-center">
-                    <h3 class="text-lg font-bold">Maya Patel</h3>
-                    <p class="text-sm opacity-75 mb-3">UI/UX Designer</p>
-                    <p class="mb-4">
-                      Entwickelte die übersichtliche und intuitive Benutzeroberfläche.
-                    </p>
-                    <!-- <div class="social-links flex justify-center space-x-3">
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-linkedin"></i></a>
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-dribbble"></i></a>
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-behance"></i></a>
-                    </div> -->
-                  </div>
-                </div>
-
-                <div class="team-card card overflow-hidden">
-                  <img src="https://picsum.photos/seed/person3/300/300" alt="Team Member"
-                    class="w-full h-48 object-cover" />
-                  <div class="p-4 text-center">
-                    <h3 class="text-lg font-bold">James Wilson</h3>
-                    <p class="text-sm opacity-75 mb-3">Puzzle Expert</p>
-                    <p class="mb-4">
-                      Stellt sicher, dass unser Löser selbst die kniffligsten Rätsel meistert.
-                    </p>
-                    <!-- <div class="social-links flex justify-center space-x-3">
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-linkedin"></i></a>
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-youtube"></i></a>
-                      <a href="#" class="text-[var(--primary)] hover:opacity-75"><i class="fab fa-instagram"></i></a>
-                    </div> -->
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card p-6">
-              <h2 class="text-2xl font-bold mb-4">Kontaktieren Sie uns</h2>
-              <p class="mb-6">
-                Have questions, feedback, or suggestions? Let us know!
-              </p>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 class="text-lg font-bold mb-2">Schreiben Sie uns eine E-Mail</h3>
-                  <p>
-                    <a href="#" class="text-[var(--primary)] hover:underline">support@sudoku-löser.de</a>
-                  </p>
-
-                  <h3 class="text-lg font-bold mt-4 mb-2">Folgen Sie uns</h3>
-                  <div class="flex space-x-4">
-                    <a href="#" class="text-[var(--primary)] hover:opacity-75 text-xl"><i
-                        class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-[var(--primary)] hover:opacity-75 text-xl"><i
-                        class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-[var(--primary)] hover:opacity-75 text-xl"><i
-                        class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-[var(--primary)] hover:opacity-75 text-xl"><i class="fab fa-github"></i></a>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 class="text-lg font-bold mb-2">Senden Sie uns eine Nachricht</h3>
-                  <form class="space-y-3">
-                    <div>
-                      <input type="text" placeholder="Your Name"
-                        class="w-full p-2 rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-color)] text-base" />
-                    </div>
-                    <div>
-                      <input type="email" placeholder="Your Email"
-                        class="w-full p-2 rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-color)] text-base" />
-                    </div>
-                    <div>
-                      <textarea placeholder="Your Message" rows="3"
-                        class="w-full p-2 rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-color)] text-base"></textarea>
-                    </div>
-                    <button type="button" class="btn-primary">
-                      Nachricht senden
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      
       </div>
     </main>
 
@@ -664,6 +560,7 @@
             <!-- <a href="#" class="text-[var(--text-color)] hover:text-[var(--primary)]">Privacy</a>
             <a href="#" class="text-[var(--text-color)] hover:text-[var(--primary)]">Terms</a>
             <a href="#" class="text-[var(--text-color)] hover:text-[var(--primary)]">Contact</a> -->
+            
             <a href="datenschutzerklaerung.html"
               class="text-[var(--text-color)] hover:text-[var(--primary)]">Datenschutz</a>
             <a href="nutzungsbedingungen.html"
@@ -671,6 +568,8 @@
             <a href="kontakt.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Kontakt</a>
 
           </div>
+          <a href="about.html"
+          class="text-[var(--text-color)] hover:text-[var(--primary)]">Über uns</a>
         </div>
       </div>
     </footer>

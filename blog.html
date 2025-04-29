@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Sudoku Blog - Tipps, Strategien und Neuigkeiten | Sudoku-Löser.de</title>
+  <meta name="description"
+    content="Entdecken Sie hilfreiche Tipps, fortgeschrittene Strategien und interessante Artikel rund um Sudoku auf unserem Blog. Ideal für Anfänger und Profis." />
+  <meta name="keywords"
+    content="Sudoku Blog, Sudoku Tipps, Sudoku Strategie, Sudoku für Anfänger, Sudoku Techniken, Sudoku Tricks, Sudoku lernen, Sudoku Methoden, Sudoku Hilfe, Sudoku fortgeschritten" />
+  <meta name="author" content="Sudoku-Löser.de" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xn--sudoku-lser-yfb.de/blog.html" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Sudoku Blog - Tipps, Strategien und Neuigkeiten | Sudoku-Löser.de" />
+  <meta property="og:description"
+    content="Entdecken Sie hilfreiche Tipps, fortgeschrittene Strategien und interessante Artikel rund um Sudoku auf unserem Blog. Ideal für Anfänger und Profis." />
+  <meta property="og:image" content="https://xn--sudoku-lser-yfb.de/images/preview.png" />
+  <meta property="og:url" content="https://xn--sudoku-lser-yfb.de/blog.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sudoku Blog - Tipps, Strategien und Neuigkeiten | Sudoku-Löser.de" />
+  <meta name="twitter:description"
+    content="Entdecken Sie hilfreiche Tipps, fortgeschrittene Strategien und interessante Artikel rund um Sudoku." />
+  <meta name="twitter:image" content="https://xn--sudoku-lser-yfb.de/images/preview.png" />
+
+  <!-- External Stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- All CSS included directly -->
+  <style>
+    /* Base Variables and Styles */
+    :root {
+      --primary: #5D5CDE;
+      --primary-light: #8382e9;
+      --primary-dark: #4b4ab2;
+
+      --light-bg: #FFFFFF;
+      --light-card: #F9FAFB;
+      --light-text: #1F2937;
+      --light-border: #E5E7EB;
+
+      --dark-bg: #121212;
+      --dark-card: #242424;
+      --dark-text: #E5E7EB;
+      --dark-border: #4B5563;
+
+      --error: #EF4444;
+      --success: #10B981;
+    }
+
+    .dark {
+      --bg-color: var(--dark-bg);
+      --card-bg: var(--dark-card);
+      --text-color: var(--dark-text);
+      --border-color: var(--dark-border);
+    }
+
+    .light {
+      --bg-color: var(--light-bg);
+      --card-bg: var(--light-card);
+      --text-color: var(--light-text);
+      --border-color: var(--light-border);
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Arial, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Card Styling */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s;
+    }
+
+    /* Button Styles */
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(93, 92, 222, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-light);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* Tabs */
+    .tab {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* Dark Mode Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: '';
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--primary);
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px var(--primary);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Blog Card Styling */
+    .blog-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .blog-image {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .blog-card:hover .blog-image img {
+      transform: scale(1.05);
+    }
+
+    .blog-date {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: var(--primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      z-index: 1;
+    }
+
+    .blog-category {
+      display: inline-block;
+      background-color: rgba(93, 92, 222, 0.1);
+      color: var(--primary);
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .blog-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+
+    .blog-card:hover .blog-title {
+      color: var(--primary);
+    }
+
+    .blog-excerpt {
+      color: var(--text-color);
+      opacity: 0.8;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .blog-meta i {
+      margin-right: 0.25rem;
+    }
+
+    .blog-meta span {
+      margin-right: 1rem;
+    }
+
+    /* New styles for blog cards based on provided headers */
+    .blog-author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+    }
+
+    .blog-meta-item {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+    }
+
+    .blog-meta-item i {
+      margin-right: 0.25rem;
+    }
+
+    /* Search and filter styles */
+    .search-input {
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.2);
+    }
+
+    .filter-select {
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235D5CDE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.2);
+    }
+
+    /* Pagination styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .page-item {
+      margin: 0 0.25rem;
+    }
+
+    .page-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .page-link:hover {
+      background-color: rgba(93, 92, 222, 0.1);
+      border-color: var(--primary);
+    }
+
+    .page-link.active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .page-link.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Featured blog styles */
+    .featured-blog {
+      position: relative;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      height: 400px;
+    }
+
+    .featured-blog-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .featured-blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-blog-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+    }
+
+    .featured-blog-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 2rem;
+      z-index: 1;
+      color: white;
+    }
+
+    .featured-blog-category {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .featured-blog-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .featured-blog-excerpt {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .featured-blog-link {
+      display: inline-flex;
+      align-items: center;
+      color: white;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .featured-blog-link:hover {
+      color: var(--primary-light);
+    }
+
+    .featured-blog-link i {
+      margin-left: 0.5rem;
+      transition: transform 0.3s;
+    }
+
+    .featured-blog-link:hover i {
+      transform: translateX(3px);
+    }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GL6NQYRK97"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-GL6NQYRK97');
+  </script>
+</head>
+
+<body>
+  <div class="min-h-screen flex flex-col">
+    <!-- HEADER -->
+    <header class="py-4 border-b border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+          <div class="flex items-center">
+            <a href="index.html">
+              <h1 class="text-2xl md:text-3xl font-bold">Sudoku-Löser.de</h1>
+            </a>
+          </div>
+          <div class="flex items-center space-x-4">
+            <!-- Dark mode toggle -->
+            <div class="flex items-center space-x-2">
+              <span class="text-sm"><i class="fas fa-sun"></i></span>
+              <label class="switch">
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+              <span class="text-sm"><i class="fas fa-moon"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <nav class="mt-4">
+          <ul class="flex overflow-x-auto space-x-2 md:space-x-4" role="tablist">
+            <li>
+              <a href="index.html" role="tab" aria-selected="false"
+                class="tab inline-flex flex-none items-center px-4 py-2">
+                Löser
+              </a>
+            </li>
+            <li>
+              <a href="sudoku-kostenlos-spielen.html" class="tab inline-flex flex-none items-center px-4 py-2" role="tab"
+                aria-selected="false">
+                Tägliches Sudoku
+              </a>
+            </li>
+            <li>
+              <button id="blogTab" class="tab inline-flex flex-none items-center px-4 py-2 active" role="tab"
+                aria-selected="true" aria-controls="blogPanel">
+                Blog
+              </button>
+            </li>
+            <!-- <li>
+              <a href="about.html" role="tab" aria-selected="false"
+                class="tab inline-flex flex-none items-center px-4 py-2">
+                Über uns
+              </a>
+            </li> -->
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="flex-grow py-6">
+      <div class="container mx-auto px-4">
+        <!-- Blog Header -->
+        <div class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-3">Der Sudoku Blog</h1>
+          <p class="text-lg opacity-80 max-w-3xl mx-auto">
+            Entdecken Sie Tipps, Strategien und Neuigkeiten rund um Sudoku. Von Anfängertechniken bis zu fortgeschrittenen
+            Methoden für echte Profis.
+          </p>
+        </div>
+
+        <!-- Search and Filter -->
+        <!-- <div class="mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+              <div class="relative">
+                <input type="text" placeholder="Suchen..." class="search-input pl-10">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <select class="filter-select flex-grow">
+                <option value="all">Alle Kategorien</option>
+                <option value="anfaenger">Anfänger-Tipps</option>
+                <option value="strategie">Strategien</option>
+                <option value="fortgeschritten">Fortgeschrittene Techniken</option>
+                <option value="wettbewerb">Wettbewerbe</option>
+              </select>
+              <select class="filter-select w-24">
+                <option value="newest">Neueste</option>
+                <option value="oldest">Älteste</option>
+                <option value="popular">Beliebt</option>
+              </select>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Featured Blog -->
+        <!-- <div class="featured-blog mb-10">
+          <div class="featured-blog-image">
+            <img src="https://picsum.photos/seed/sudoku-featured/1200/600" alt="Featured Blog Post">
+          </div>
+          <div class="featured-blog-content">
+            <span class="featured-blog-category">Strategie</span>
+            <h2 class="featured-blog-title">Die ultimative Anleitung für Sudoku X-Wing-Technik</h2>
+            <p class="featured-blog-excerpt">Lernen Sie, wie Sie die X-Wing-Technik beherrschen, um schwierige Sudoku-Rätsel zu lösen. Diese fortgeschrittene Strategie ist entscheidend für anspruchsvolle Puzzles.</p>
+            <a href="blog-post-x-wing-technik.html" class="featured-blog-link">
+              Weiterlesen <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div> -->
+
+        <!-- Blog Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <!-- Blog Card 1 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-solver/1200/600" alt="Automatischer Sudoku Löser">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Technologie</div>
+              <a href="blog/automatischer-sudoku-loeser.html" class="block">
+                <h3 class="blog-title">Automatischer Sudoku Löser – Intelligente Lösungen auf Knopfdruck</h3>
+              </a>
+              <p class="blog-excerpt">
+                Lernen Sie, wie ein automatischer Sudoku-Löser komplexe Rätsel in Sekundenschnelle knackt.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 5 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 2 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-history/1200/600" alt="Die Geschichte von Sudoku">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku-Geschichte</div>
+              <a href="blog/die-geschichte-von-sudoku.html" class="block">
+                <h3 class="blog-title">Die Geschichte von Sudoku: Ursprung und Entwicklung des beliebten Rätsels</h3>
+              </a>
+              <p class="blog-excerpt">
+                Entdecken Sie die faszinierende Entwicklung von Sudoku vom Ursprung bis zum globalen Phänomen.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 6 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 3 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/advanced-sudoku/1200/600" alt="Fortgeschrittene Sudoku-Techniken">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku-Techniken</div>
+              <a href="blog/fortgeschrittene-sudoku-techniken.html" class="block">
+                <h3 class="blog-title">Fortgeschrittene Sudoku-Techniken: Schwierige Rätsel meistern</h3>
+              </a>
+              <p class="blog-excerpt">
+                Meistern Sie anspruchsvolle Sudoku-Rätsel mit fortgeschrittenen Techniken wie X-Wing und Swordfish.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 8 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-solver/1200/600" alt="Automatischer Sudoku Löser">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Technologie</div>
+              <a href="blog/sudoku-fuer-das-gehirn.html" class="block">
+                <h3 class="blog-title">Automatischer Sudoku Löser – Intelligente Lösungen auf Knopfdruck</h3>
+              </a>
+              <p class="blog-excerpt">
+                Entdecke, wie unser automatischer Sudoku Löser auf Sudoku-Löser.de knifflige Rätsel in Sekunden löst und deine Fähigkeiten verbessert!
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller" class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 5 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-brain/1200/600" alt="Sudoku Gehirntraining">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Vorteile</div>
+              <a href="blog/sudoku-gehirntraining.html" class="block">
+                <h3 class="blog-title">Sudoku: Das ultimative Training für dein Gehirn</h3>
+              </a>
+              <p class="blog-excerpt">
+                Entdecke, wie Sudoku dein Gehirn trainiert, logisches Denken fördert und Stress abbaut. Nutze unseren Sudoku-Solver auf Sudoku-Löser.de, um Rätsel zu meistern!
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller" class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 6 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/daily-sudoku/1200/600" alt="Tägliches Sudoku">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Tägliches Sudoku</div>
+              <a href="blog/sudoku-kostenlos-spielen.html" class="block">
+                <h3 class="blog-title">Das tägliche Sudoku meistern: Tipps für datumsbasierte Rätsel</h3>
+              </a>
+              <p class="blog-excerpt">
+                Lernen Sie, die täglichen, datumsbasierten Sudoku-Rätsel auf Sudoku-Löser.de zu meistern. Entdecken Sie Tipps, Strategien und wie unser Solver Ihnen hilft!
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller" class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 6 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+          
+
+          <!-- Blog Card 4 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-brain/1200/600" alt="Sudoku Gehirntraining">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Vorteile</div>
+              <a href="blog/sudoku-gehirntraining.html" class="block">
+                <h3 class="blog-title">Sudoku: Das ultimative Training für dein Gehirn</h3>
+              </a>
+              <p class="blog-excerpt">
+                Erfahren Sie, wie Sudoku Ihr Gehirn trainiert und kognitive Fähigkeiten fördert.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 6 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 5 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-loeser/1200/600" alt="Sudoku Löser">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku-Tools</div>
+              <a href="blog/sudoku-loeser-ihr-smarter-helfer.html" class="block">
+                <h3 class="blog-title">Sudoku Löser: Ihr smarter Helfer für jedes Rätsel</h3>
+              </a>
+              <p class="blog-excerpt">
+                Entdecken Sie, wie ein smarter Sudoku-Löser jedes Rätsel schnell und einfach knackt.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 6 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 6 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-loeser-kostenlos/1200/600" alt="Sudoku Löser Kostenlos">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku-Tools</div>
+              <a href="blog/sudoku-loeser-kostenlos.html" class="block">
+                <h3 class="blog-title">Sudoku Löser Kostenlos: Jedes Rätsel mühelos lösen</h3>
+              </a>
+              <p class="blog-excerpt">
+                Lösen Sie jedes Sudoku-Rätsel mühelos mit einem kostenlosen Sudoku-Löser-Tool.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 7 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 7 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-strategies/1200/600" alt="Sudoku-Strategien">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Techniken</div>
+              <a href="blog/sudoku-strategien-die-besten-techniken.html" class="block">
+                <h3 class="blog-title">Sudoku-Strategien: Die besten Techniken für schwere Rätsel</h3>
+              </a>
+              <p class="blog-excerpt">
+                Lernen Sie die besten Techniken, um selbst die schwierigsten Sudoku-Rätsel zu lösen.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 7 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-strategies/1200/600" alt="Sudoku-Strategien">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Techniken</div>
+              <a href="blog/sudoku-strategien.html" class="block">
+                <h3 class="blog-title">Sudoku-Strategien: Die besten Techniken für schwere Rätsel</h3>
+              </a>
+              <p class="blog-excerpt">
+                Entdecken Sie die besten Sudoku-Strategien für schwere Rätsel – von der Eliminationsmethode bis zu fortgeschrittenen Techniken wie X-Wing und Swordfish. Meistern Sie jedes Puzzle mit unseren Tipps!
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller" class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 7 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+          
+
+          <!-- Blog Card 8 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-tech/1200/600" alt="Sudoku und Technologie">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Technologie</div>
+              <a href="blog/sudoku-technologie.html" class="block">
+                <h3 class="blog-title">Sudoku und Technologie: Die perfekte Kombination</h3>
+              </a>
+              <p class="blog-excerpt">
+                Erfahren Sie, wie Technologie und Sudoku zusammen die Rätsellösung revolutionieren.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 5 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 9 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/daily-sudoku/1200/600" alt="Tägliches Sudoku spielen">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Tägliche Herausforderung</div>
+              <a href="blog/taegliches-sudoku-spielen.html" class="block">
+                <h3 class="blog-title">Tägliches Sudoku spielen – Jeden Tag eine neue Herausforderung</h3>
+              </a>
+              <p class="blog-excerpt">
+                Entdecken Sie die Freude am täglichen Sudoku mit neuen Herausforderungen jeden Tag.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 4 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Card 10 -->
+          <div class="card blog-card">
+            <div class="blog-image">
+              <img src="https://picsum.photos/seed/sudoku-tips/1200/600" alt="Wie man Sudoku löst">
+            </div>
+            <div class="p-4">
+              <div class="blog-category">Sudoku Tipps</div>
+              <a href="blog/wie-man-sudoku-loest-tipps-fuer-anfaenger-und-profis.html" class="block">
+                <h3 class="blog-title">Wie man Sudoku löst: Tipps für Anfänger und Profis</h3>
+              </a>
+              <p class="blog-excerpt">
+                Praktische Tipps für Anfänger und Profis, um Sudoku-Rätsel erfolgreich zu lösen.
+              </p>
+              <div class="blog-meta">
+                <img src="https://picsum.photos/seed/author-anna/100/100" alt="Anna Müller"
+                  class="blog-author-avatar">
+                <span class="blog-meta-item"><i class="fas fa-user"></i> Anna Müller</span>
+                <span class="blog-meta-item"><i class="far fa-clock"></i> 8 Min. Lesezeit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <!-- <div class="pagination">
+          <div class="page-item">
+            <a href="#" class="page-link disabled">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+          </div>
+          <div class="page-item">
+            <a href="#" class="page-link active">1</a>
+          </div>
+          <div class="page-item">
+            <a href="#" class="page-link">2</a>
+          </div>
+          <div class="page-item">
+            <a href="#" class="page-link">3</a>
+          </div>
+          <div class="page-item">
+            <span class="page-link disabled">...</span>
+          </div>
+          <div class="page-item">
+            <a href="#" class="page-link">7</a>
+          </div>
+          <div class="page-item">
+            <a href="#" class="page-link">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div> -->
+
+        <!-- Newsletter Signup -->
+        <!-- <div class="card p-6 mt-12">
+          <div class="text-center mb-4">
+            <h2 class="text-xl font-bold">Abonnieren Sie unseren Sudoku-Newsletter</h2>
+            <p class="opacity-80 mt-2">Erhalten Sie wöchentlich neue Sudoku-Rätsel, Tipps und Tricks direkt in Ihre Inbox.</p>
+          </div>
+          <form class="flex flex-col md:flex-row gap-2 max-w-xl mx-auto">
+            <input type="email" placeholder="Ihre E-Mail Adresse" class="search-input flex-grow" required>
+            <button type="submit" class="btn-primary whitespace-nowrap">Jetzt abonnieren</button>
+          </form>
+        </div> -->
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto py-4 border-t border-[var(--border-color)]">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-2 md:mb-0">
+            <p>© <span id="year"></span>
+              <a href="index.html" class="text-blue-500 no-underline hover:no-underline">Sudoku-Löser.de</a>
+            </p>
+          </div>
+
+          <div class="flex space-x-4">
+            <a href="datenschutzerklaerung.html"
+              class="text-[var(--text-color)] hover:text-[var(--primary)]">Datenschutz</a>
+            <a href="nutzungsbedingungen.html"
+              class="text-[var(--text-color)] hover:text-[var(--primary)]">Nutzungsbedingungen</a>
+            <a href="kontakt.html" class="text-[var(--text-color)] hover:text-[var(--primary)]">Kontakt</a>
+          </div>
+          <a href="about.html"
+          class="text-[var(--text-color)] hover:text-[var(--primary)]">Über uns</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Dark mode based on preference
+    document.addEventListener("DOMContentLoaded", function () {
+      const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      if (prefersDarkMode) {
+        document.body.classList.add("dark");
+        darkModeToggle.checked = true;
+      } else {
+        document.body.classList.add("light");
+      }
+      darkModeToggle.addEventListener("change", function () {
+        document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
+      });
+
+      // Set current year in footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+
+</html>

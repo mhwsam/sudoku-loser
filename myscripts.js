@@ -35,6 +35,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  const hash = window.location.hash;
+  if (hash === "#aboutPanel") {
+    // 1️⃣ Remove active from the solver tab
+    document.getElementById("solverTab").classList.remove("active");
+    document.querySelector('#solverPanel').classList.add("hidden");
+
+    // 2️⃣ Activate the about tab & panel
+    const aboutTab = document.getElementById("aboutTab");
+    aboutTab.classList.add("active");
+    document.getElementById("aboutPanel").classList.remove("hidden");
+    
+    // 3️⃣ (Optional) scroll into view
+    aboutTab.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   // Blog articles
   const blogButtons = document.querySelectorAll(".blog-btn");
   const blogModal = document.getElementById("blogModal");
@@ -958,3 +973,8 @@ window.addEventListener("resize", function () {
   }
 });
 document.getElementById("year").textContent = new Date().getFullYear();
+
+
+
+
+
