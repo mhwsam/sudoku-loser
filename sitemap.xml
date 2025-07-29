@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Pages -->
+  <url>
+    <loc>https://sudoku-löser.de/</loc>
+    <lastmod>2025-07-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/about</loc>
+    <lastmod>2025-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/kontakt</loc>
+    <lastmod>2025-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/sudoku-kostenlos-spielen</loc>
+    <lastmod>2025-07-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/killer-sudoku-solver</loc>
+    <lastmod>2025-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog</loc>
+    <lastmod>2025-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/nutzungsbedingungen</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/datenschutzerklaerung</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://sudoku-löser.de/blog/automatischer-sudoku-loeser</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/die-geschichte-von-sudoku</loc>
+    <lastmod>2025-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/fortgeschrittene-sudoku-techniken</loc>
+    <lastmod>2025-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-fuer-das-gehirn</loc>
+    <lastmod>2025-07-19</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-gehirntraining</loc>
+    <lastmod>2025-07-16</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-kostenlos</loc>
+    <lastmod>2025-07-20</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-loeser-ihr-smarter-helfer</loc>
+    <lastmod>2025-07-21</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-loeser-kostenlos</loc>
+    <lastmod>2025-07-18</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-strategien-die-besten-techniken</loc>
+    <lastmod>2025-07-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-strategien</loc>
+    <lastmod>2025-07-22</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/sudoku-technologie</loc>
+    <lastmod>2025-07-23</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/taegliches-sudoku-spielen</loc>
+    <lastmod>2025-07-29</lastmod>
+  </url>
+
+  <url>
+    <loc>https://sudoku-löser.de/blog/wie-man-sudoku-loest-tipps-fuer-anfaenger-und-profis</loc>
+    <lastmod>2025-07-28</lastmod>
+  </url>
+
+</urlset>
