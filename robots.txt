@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /another%20blog.txt
+
+Allow: /
+
+Sitemap: https://sudoku-löser.de/sitemap.xml
