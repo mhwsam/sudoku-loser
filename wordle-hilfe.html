@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Wordle auf Deutsch – Löser: Hilfe, Tipps & Beispiele</title>
+    <meta name="description"
+        content="Die kompakte Wordle-Hilfe auf Deutsch: Regeln in Kürze, Beispielrunden, Tipps für bessere Startwörter und häufige Fehler. Schnell verstehen und direkt besser spielen." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://sudoku-löser.de/wordle-hilfe" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sudoku-löser.de/wordle-hilfe" />
+    <meta property="og:title" content="Wordle auf Deutsch – Löser: Hilfe, Tipps & Beispiele" />
+    <meta property="og:description"
+        content="Wordle-Regeln schnell erklärt, mit Beispielen und Tipps für bessere Startwörter. Die praktische Wordle-Hilfe auf Deutsch." />
+    <meta property="og:image" content="https://sudoku-löser.de/images/wordle-hilfe.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Wordle auf Deutsch – Löser: Hilfe, Tipps & Beispiele" />
+    <meta name="twitter:description" content="Regeln, Beispiele und Tipps – die kompakte Wordle-Hilfe auf Deutsch." />
+    <meta name="twitter:image" content="https://sudoku-löser.de/images/wordle-hilfe.jpg" />
+
+    <style>
+        /* ---- Design tokens (light/dark aware) ---- */
+        :root {
+            --bg: #0b0f14;
+            /* page */
+            --card: #0f141b;
+            /* panel */
+            --text: #e7ecf4;
+            /* body text */
+            --muted: #8ea2b7;
+            /* secondary text */
+            --line: #1d2733;
+            /* borders */
+            --accent: #4da3ff;
+            /* links/buttons */
+            --green: #28c667;
+            /* 🟩 */
+            --yellow: #f2c12e;
+            /* 🟨 */
+            --gray: #2a3441;
+            /* ⬜ tile */
+            --shadow: rgba(0, 0, 0, 0.25);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f7f9fc;
+                --card: #ffffff;
+                --text: #0b1220;
+                --muted: #506172;
+                --line: #e8eef5;
+                --accent: #1158cc;
+                --gray: #e9eef5;
+                --shadow: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        /* ---- Base ---- */
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        .wrap {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        /* ---- Header ---- */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 6px 0 20px;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            background: transparent;
+            transition: border-color .2s, color .2s;
+        }
+
+        .home-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .home-link:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+
+        .title {
+            font-weight: 800;
+            letter-spacing: .2px;
+            font-size: 1.5rem;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .badge {
+            border: 1px solid var(--line);
+            color: var(--muted);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+        }
+
+        /* ---- Layout ---- */
+        .grid {
+            display: grid;
+            gap: 16px
+        }
+
+        @media(min-width:860px) {
+            .grid {
+                grid-template-columns: 1.1fr .9fr
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* ---- Inputs ---- */
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .field {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex: 1;
+        }
+
+        input[type=text] {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+            color: var(--text);
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        input::placeholder {
+            color: var(--muted)
+        }
+
+        /* ---- Tiles ---- */
+        .tiles-container {
+            margin: 16px 0;
+        }
+
+        .tiles {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .tile {
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            border-radius: 10px;
+            border: 2px solid var(--line);
+            background: var(--gray);
+            cursor: pointer;
+            user-select: none;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .tile:hover {
+            transform: scale(1.05);
+        }
+
+        .tile:active {
+            transform: scale(0.95);
+        }
+
+        .tile[data-state="y"] {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            color: #000;
+        }
+
+        .tile[data-state="g"] {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        /* ---- Tile Legend ---- */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .legend-tile {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 2px solid var(--line);
+        }
+
+        /* ---- Buttons ---- */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid var(--line);
+            background: var(--card);
+            color: var(--text);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn.primary {
+            background: var(--accent);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+
+        /* ---- Lists ---- */
+        .list {
+            display: grid;
+            gap: 8px
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .item:hover {
+            transform: translateX(4px);
+        }
+
+        .word {
+            font-weight: 900;
+            font-size: 20px
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* ---- Footer bar on mobile ---- */
+        .bar {
+            position: sticky;
+            bottom: 0;
+            inset-inline: 0;
+            background: var(--card);
+            border-top: 1px solid var(--line);
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 12px;
+            box-shadow: 0 -4px 12px var(--shadow);
+        }
+
+        @media(min-width:860px) {
+            .bar {
+                position: static;
+                border: none;
+                padding: 0;
+                background: transparent;
+                box-shadow: none;
+            }
+        }
+
+        /* ---- Instructions ---- */
+        .instructions {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .instructions ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 6px;
+        }
+
+        /* ---- Toast Notification ---- */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card);
+            color: var(--text);
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* ---- Empty State ---- */
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: var(--muted);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Reduce motion preference */
+        @media (prefers-reduced-motion:no-preference) {
+            .fade {
+                animation: fade .18s ease-out
+            }
+
+            @keyframes fade {
+                from {
+                    opacity: .6;
+                    transform: translateY(2px)
+                }
+
+                to {
+                    opacity: 1;
+                    transform: none
+                }
+            }
+        }
+
+        .tile,
+        .btn,
+        .item {
+            will-change: transform;
+        }
+
+        .item {
+            background: transparent;
+            text-align: left;
+        }
+
+        .item:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .site-footer {
+            margin-top: 32px;
+            border-top: 1px solid var(--border-color, var(--line));
+            background: color-mix(in oklab, var(--card) 92%, black 8%);
+            /* fallback if color-mix unsupported */
+            background: var(--card);
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 16px;
+            display: grid;
+            gap: 20px;
+        }
+
+        @media (min-width: 860px) {
+            .footer-inner {
+                grid-template-columns: 1.2fr 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .footer-col {
+            min-width: 0;
+        }
+
+        .brand-link {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .brand-name {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: .2px;
+        }
+
+        .brand-copy {
+            color: var(--muted);
+            font-size: 13px;
+            margin: 8px 0 0;
+        }
+
+        .brand-copy a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .brand-copy a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-title {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            opacity: .9;
+        }
+
+        .footer-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: grid;
+            gap: 6px;
+        }
+
+        .footer-list a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .footer-list a:hover {
+            color: var(--accent);
+        }
+
+        .mini-form {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .mini-form input {
+            flex: 1;
+            min-width: 0;
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .mini-form input::placeholder {
+            color: var(--muted);
+        }
+
+        .mini-form button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .mini-form button:hover {
+            filter: brightness(1.1);
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 6px 0 0;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color, var(--line));
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--accent);
+        }
+
+        .to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .to-top:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Home button */
+        .hdr {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+            margin: 6px 0 14px;
+        }
+
+        .home-link {
+            display: inline-grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .home-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .home-link:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Responsive typography + spacing */
+        .title {
+            font-weight: 800;
+            letter-spacing: .2px;
+            font-size: clamp(18px, 5.6vw, 22px);
+            line-height: 1.1;
+        }
+
+        .card {
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px var(--shadow);
+        }
+
+        /* Make tiles use full width on phones (no 320px cap) */
+        @media (max-width: 520px) {
+            .wrap {
+                padding: 12px;
+            }
+
+            .hdr {
+                flex-wrap: wrap;
+                row-gap: 8px;
+            }
+
+            .badges {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .badge {
+                justify-self: end;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .badge:first-child {
+                justify-self: start;
+            }
+
+            .instructions {
+                padding: 12px;
+            }
+
+            .instructions li {
+                margin-bottom: 4px;
+            }
+
+            .tiles-container {
+                margin: 12px 0;
+            }
+
+            .tiles {
+                max-width: none;
+                /* remove 320px clamp */
+                grid-template-columns: repeat(5, 1fr);
+                gap: 6px;
+            }
+
+            .tile {
+                border-width: 1px;
+                font-size: 1.25rem;
+                /* a bit smaller on tight screens */
+            }
+
+            .legend {
+                gap: 12px;
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
+
+            .legend-item {
+                font-size: 12px;
+            }
+
+            .btn-group.bar {
+                padding: 10px;
+                margin-top: 10px;
+                gap: 8px;
+            }
+
+            .btn {
+                min-width: 0;
+                padding: 10px 12px;
+                font-size: 15px;
+            }
+
+            .list {
+                gap: 6px;
+            }
+
+            .item {
+                padding: 10px 12px;
+            }
+
+            .word {
+                font-size: 18px;
+            }
+
+            .meta {
+                font-size: 12px;
+            }
+        }
+
+        /* Slightly tighter chips on mid-size phones */
+        @media (min-width:521px) and (max-width:760px) {
+            .badges {
+                gap: 6px;
+            }
+
+            .badge {
+                padding: 6px 10px;
+            }
+        }
+
+        /* Ensure footer stays slim on phones (if you used my footer) */
+        @media (max-width:520px) {
+            .footer-inner {
+                padding: 16px 12px;
+                gap: 16px;
+            }
+
+            .footer-bottom {
+                padding: 10px 12px;
+            }
+        }
+    </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GL6NQYRK97"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-GL6NQYRK97');
+  </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="hdr">
+            <a class="home-link" href="index.html" aria-label="Startseite">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor" d="M12 3l9 8h-2v9h-6v-6H11v6H5v-9H3l9-8z" />
+                </svg>
+            </a>
+            <div class="title">Deutscher Wordle-Solver</div>
+            <div class="badges">
+                <span class="badge" id="status" aria-live="polite">Lade…</span>
+                <span class="badge" id="remain" aria-live="polite">—</span>
+            </div>
+        </header>
+
+
+
+        <div class="instructions card">
+            <h3>Wie man den Solver benutzt:</h3>
+            <ul>
+                <li>Gib dein 5-Buchstaben-Wort ein (Ä→AE, Ö→OE, Ü→UE, ß→SS)</li>
+                <li>Klicke auf die Kacheln unten, um das Ergebnis einzugeben: ⬜ (nicht enthalten), 🟨 (falscher Platz),
+                    🟩 (richtiger Platz)</li>
+                <li>Drücke "Hinweis übernehmen" oder Enter, um die Wortliste zu filtern</li>
+                <li>Verwende "Besten Tipp", um das statistisch beste Wort zu erhalten</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <!-- Controls -->
+            <section class="card">
+                <h2>Dein Versuch</h2>
+                <div class="field">
+                    <input id="guess" type="text" inputmode="latin" autocomplete="off" maxlength="5"
+                        placeholder="z. B. adler">
+                </div>
+
+                <div class="tiles-container">
+                    <div id="tiles" class="tiles" aria-label="Feedback‑Kacheln"></div>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-tile" style="background: var(--gray);"></div>
+                            <span>Nicht enthalten</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-tile" style="background: var(--yellow);"></div>
+                            <span>Falscher Platz</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-tile" style="background: var(--green);"></div>
+                            <span>Richtiger Platz</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group bar">
+                    <button class="btn primary" id="apply">Hinweis übernehmen</button>
+                    <button class="btn" id="autopick">Besten Tipp</button>
+                    <button class="btn" id="reset">Zurücksetzen</button>
+                </div>
+            </section>
+
+            <!-- Suggestions -->
+            <section class="card">
+                <h2>Vorschläge</h2>
+                <p class="sub">Bewertet gegen aktuelle Restlösungen. Sortierung: Entropie (↑), dann Minimax (↓).</p>
+                <div id="suggestions" class="list" style="margin-top:10px"></div>
+                <div id="empty-suggestions" class="empty-state" style="display: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <p>Keine Vorschläge verfügbar</p>
+                </div>
+            </section>
+        </div>
+
+        <section class="card" style="margin-top:16px">
+            <h2>Protokoll</h2>
+            <div id="log" class="list" style="margin-top:10px"></div>
+            <div id="empty-log" class="empty-state" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p>Dein Spielverlauf erscheint hier</p>
+            </div>
+        </section>
+        <section class="card" style="margin-top:20px">
+            <h2>Wordle Löser & Hilfe – kostenlos, schnell und einfach zu bedienen</h2>
+            <p>
+                Du suchst <strong>Wordle Hilfe</strong> auf Deutsch? Genau dafür ist dieses Tool gemacht.
+                Unser Solver bewertet jeden möglichen Tipp mit <em>Entropie</em> (Erwartungswert) und
+                <em>Minimax</em> (schlechtester Fall), damit du die <strong>besten nächsten Wörter</strong>
+                siehst – nicht nur irgendeine Liste. Das Ergebnis: weniger Raten, mehr Treffer, mehr Spaß.
+            </p>
+            <p>
+                Der Solver ist <strong>kostenlos</strong>, <strong>schnell</strong> und funktioniert
+                direkt im Browser – keine Anmeldung, keine Werbung, keine Ablenkung. Gib deinen Versuch ein,
+                klicke die Kacheln auf ⬜/🟨/🟩, und schon wird die <strong>Restliste</strong> berechnet.
+                Dank intelligenter Vorfilterung läuft das auch auf dem Handy blitzschnell.
+            </p>
+            <p>
+                Warum nennen wir es die <strong>#1 Wordle Hilfe</strong>?
+                Weil wir nicht nur Wörter „durchreichen“, sondern jede Option gegen die verbleibenden Lösungen
+                <em>statistisch</em> bewerten. Außerdem berücksichtigen wir Positionshäufigkeiten und
+                Buchstabenabdeckung, damit deine ersten Züge maximal Information liefern – ideal für sichere
+                Zweit- und Drittversuche.
+            </p>
+            <p>
+                Unser Tool ist für die deutsche Version optimiert (Ä→AE, Ö→OE, Ü→UE, ß→SS) und versteht
+                die typischen Muster der deutschen Sprache. Du kannst es direkt über
+                <a href="https://xn--sudoku-lser-yfb.de/wordle-hilfe"
+                    rel="canonical">https://xn--sudoku-lser-yfb.de/wordle-hilfe</a>
+                nutzen oder als Lesezeichen speichern.
+            </p>
+            <p>
+                Kurz gesagt: <strong>Wordle Hilfe, kostenlos</strong>, minimalistisch, mobilfreundlich und
+                extrem leicht zu bedienen. Probiere es aus, vergleiche die Vorschläge und erlebe, wie sich
+                dein Lösungsweg spürbar verkürzt.
+            </p>
+        </section>
+
+        <section class="card" style="margin-top:16px">
+            <h2>FAQ – Häufige Fragen zur Wordle Hilfe</h2>
+
+            <details class="item" style="margin-bottom:8px">
+                <summary><strong>Ist die Wordle Hilfe wirklich kostenlos?</strong></summary>
+                <div class="meta" style="margin-top:6px">
+                    Ja. Das Tool ist dauerhaft <strong>kostenlos</strong> und läuft vollständig im Browser.
+                    Es werden keine Accounts, Abos oder Zahlungen benötigt.
+                </div>
+            </details>
+
+            <details class="item" style="margin-bottom:8px">
+                <summary><strong>Wie gebe ich die Hinweise richtig ein?</strong></summary>
+                <div class="meta" style="margin-top:6px">
+                    Tippe dein Wort ein und klicke die fünf Kacheln durch: ⬜ = Buchstabe nicht enthalten,
+                    🟨 = Buchstabe enthält, aber falsche Position, 🟩 = richtige Position. Klicke auf
+                    <em>Hinweis übernehmen</em>, um die Restliste zu filtern.
+                </div>
+            </details>
+
+            <details class="item" style="margin-bottom:8px">
+                <summary><strong>Warum sind die Vorschläge so gut?</strong></summary>
+                <div class="meta" style="margin-top:6px">
+                    Wir kombinieren <em>Entropie</em> (liefert die meiste Information im Schnitt) und
+                    <em>Minimax</em> (minimiert den größten Restfall). Zusätzlich fließen
+                    Positionshäufigkeiten und Buchstabenabdeckung als Tiebreaker ein.
+                </div>
+            </details>
+
+            <details class="item" style="margin-bottom:8px">
+                <summary><strong>Funktioniert das auch auf dem Handy?</strong></summary>
+                <div class="meta" style="margin-top:6px">
+                    Ja. Die Oberfläche ist mobilfreundlich mit großer Touch-Zielgröße, Sticky-Action-Bar
+                    und schnellem Ranking – ideal für unterwegs.
+                </div>
+            </details>
+
+            <details class="item">
+                <summary><strong>Unterstützt ihr Umlaute und ß?</strong></summary>
+                <div class="meta" style="margin-top:6px">
+                    Ja. Für das Spiel werden sie normiert: Ä→AE, Ö→OE, Ü→UE, ß→SS. Dadurch bleibt die
+                    Wortlänge konsistent und die Bewertung korrekt.
+                </div>
+            </details>
+        </section>
+
+
+
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-col brand">
+                <a href="/" class="brand-link">
+                    <span class="brand-name">Sudoku-Löser.de</span>
+                </a>
+                <p class="brand-copy">
+                    #1 <strong>Wordle Hilfe</strong> – schnell, kostenlos, einfach zu bedienen.
+
+                </p>
+            </div>
+
+            <nav class="footer-col links">
+                <h3 class="footer-title">Links</h3>
+                <ul class="footer-list">
+                    <li><a href="datenschutzerklaerung.html">Datenschutz</a></li>
+                    <li><a href="nutzungsbedingungen.html">Nutzungs­bedingungen</a></li>
+                    <li><a href="impressum.html">Impressum</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="about.html">Über uns</a></li>
+                </ul>
+            </nav>
+
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> <a href="index.html">Sudoku-Löser.de</a></p>
+            <button id="toTop" class="to-top" aria-label="Nach oben">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <path fill="currentColor" d="M12 5l7 7-1.5 1.5L13 9.5V20h-2V9.5L6.5 13.5 5 12z" />
+                </svg>
+                nach oben
+            </button>
+        </div>
+    </footer>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Ist die Wordle Hilfe wirklich kostenlos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Das Tool ist dauerhaft kostenlos und läuft vollständig im Browser. Es werden keine Accounts, Abos oder Zahlungen benötigt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie gebe ich die Hinweise richtig ein?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wort tippen, Kacheln auf ⬜/🟨/🟩 klicken und 'Hinweis übernehmen' drücken. ⬜ = nicht enthalten, 🟨 = falsche Position, 🟩 = richtige Position."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum sind die Vorschläge so gut?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Wordle Hilfe kombiniert Entropie und Minimax, plus Positionshäufigkeiten und Buchstabenabdeckung als Tiebreaker, um statistisch beste Tipps zu generieren."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert das auch auf dem Handy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die Oberfläche ist mobilfreundlich (Sticky-Action-Bar, große Touch-Ziele) und das Ranking ist optimiert für schnelle Geräte und langsame Verbindungen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Unterstützt ihr Umlaute und ß?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Für das Spiel werden Ä→AE, Ö→OE, Ü→UE und ß→SS normiert, damit die Wortlänge konsistent bleibt und die Auswertung korrekt ist."
+      }
+    }
+  ]
+}
+</script>
+    <script>
+        // ===== CONFIG =====
+        const DATA_URL = window.DATA_URL_OVERRIDE || "de_wordle_stats.json";
+        let TOP_K_HEURISTIC = 400;    // wird dynamisch feinjustiert
+        const SHOW_N = 12;
+
+        // ===== STATE =====
+        let DATA, BY_WORD = new Map(), ANSWERS = new Set(), ALLOWED = new Set();
+        let remaining = [], history = [];
+
+        // ===== HELPERS =====
+        const gi = c => c.charCodeAt(0) - 97; // a..z
+        const AZ5 = /^[a-z]{5}$/;
+        function normalizeDe(s) { return s.replace(/[Ää]/g, "ae").replace(/[Öö]/g, "oe").replace(/[Üü]/g, "ue").replace(/ß/g, "ss").toLowerCase().replace(/[^a-z]/g, "") }
+        const FB_CACHE = new Map(); // key = guess + '|' + answer -> code
+        function feedbackCode(guess, answer) {
+            const key = guess + '|' + answer;
+            const hit = FB_CACHE.get(key);
+            if (hit !== undefined) return hit;
+
+            const digits = [0, 0, 0, 0, 0];
+            const remain = new Int16Array(26);
+            for (let i = 0; i < 5; i++) { if (guess[i] === answer[i]) digits[i] = 2; else remain[gi(answer[i])]++; }
+            for (let i = 0; i < 5; i++) { if (digits[i] === 0) { const g = gi(guess[i]); if (remain[g] > 0) { digits[i] = 1; remain[g]--; } } }
+
+            let code = 0; for (let i = 0; i < 5; i++) code = code * 3 + digits[i];
+            FB_CACHE.set(key, code);
+            return code;
+        }
+
+        function saveState() {
+            try { localStorage.setItem('de_solver_state', JSON.stringify({ history, remaining })); } catch { }
+        }
+        function loadState() {
+            try {
+                const s = JSON.parse(localStorage.getItem('de_solver_state') || 'null');
+                if (s && Array.isArray(s.history) && Array.isArray(s.remaining)) {
+                    history = s.history;
+                    remaining = s.remaining.filter(w => ANSWERS.has(w)); // guard
+                    setRemain();
+                    for (const h of history) logStep(h.guess, h.p, remaining.length);
+                }
+            } catch { }
+        }
+
+        function applyPatternFilter(guess, pCode, pool) { return pool.filter(a => feedbackCode(guess, a) === pCode); }
+        function posScore(w) { const s = BY_WORD.get(w)?.posfreq || [0, 0, 0, 0, 0]; return s[0] + s[1] + s[2] + s[3] + s[4]; }
+        function letterScore(w) { return BY_WORD.get(w)?.score_letter || 0; }
+        function uniqCount(w) { return new Set(w).size; }
+        function heuristicRank(w) { return 2.2 * posScore(w) + 0.9 * letterScore(w) + 150 * (uniqCount(w) === 5); }
+        function partitionsForGuessAgainst(guess, pool) { const m = new Map(); for (const a of pool) { const c = feedbackCode(guess, a); m.set(c, (m.get(c) || 0) + 1); } return m; }
+        function entropyAndMinimax(m, total) { let M = 0, H = 0; for (const n of m.values()) { if (n > M) M = n; const p = n / total; H += -p * Math.log2(p); } return { minimax: M, entropy: H }; }
+
+        function dynamicTopK() {
+            const n = remaining.length;
+            if (n > 2000) return 600;   // große Menge → mehr Breite
+            if (n > 800) return 500;
+            if (n > 200) return 400;
+            if (n > 60) return 300;
+            return n; // klein: prüfe alle
+        }
+
+        function chooseCandidatePool() {
+            const K = TOP_K_HEURISTIC = dynamicTopK();
+            if (remaining.length <= K) return [...remaining];
+            const arr = Array.from(ALLOWED);
+            arr.sort((a, b) => heuristicRank(b) - heuristicRank(a));
+            return arr.slice(0, K);
+        }
+
+        function rankCandidates(pool, rem) {
+            const total = rem.length; const out = [];
+            for (const w of pool) {
+                const parts = partitionsForGuessAgainst(w, rem);
+                const { minimax, entropy } = entropyAndMinimax(parts, total);
+                const tie = posScore(w) + 0.0001 * letterScore(w);
+                out.push({ w, entropy, minimax, tie });
+            }
+            out.sort((a, b) => b.entropy - a.entropy || a.minimax - b.minimax || b.tie - a.tie || (a.w < b.w ? -1 : 1));
+            return out;
+        }
+
+        // ===== UI =====
+        function $(id) { return document.getElementById(id) }
+        function setRemain() {
+            $('remain').textContent = `Restlösungen: ${remaining.length}`;
+            if (remaining.length === 0) {
+                showToast("Keine Lösungen gefunden! Versuche es mit anderen Hinweisen.");
+            }
+        }
+        function setStatus(t) { $('status').textContent = t; }
+        function renderTiles(seed = "") {
+            const box = $('tiles'); box.innerHTML = '';
+            const stateName = s => s === 'g' ? 'grün' : s === 'y' ? 'gelb' : 'grau';
+            for (let i = 0; i < 5; i++) {
+                const d = document.createElement('button');
+                d.type = 'button';
+                d.className = 'tile';
+                d.dataset.state = 'b';
+                d.textContent = seed[i] || '';
+                d.setAttribute('aria-label', `Kachel ${i + 1}, ${stateName('b')}`);
+                d.setAttribute('aria-live', 'polite');
+                d.addEventListener('click', cycle);
+                d.addEventListener('keydown', e => {
+                    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); cycle(); }
+                });
+                function cycle() {
+                    const s = d.dataset.state, n = s === 'b' ? 'y' : (s === 'y' ? 'g' : 'b');
+                    d.dataset.state = n;
+                    d.setAttribute('aria-label', `Kachel ${i + 1}, ${stateName(n)}`);
+                }
+                box.appendChild(d);
+            }
+        }
+
+        function syncTiles() {
+            const v = normalizeDe($('guess').value).slice(0, 5);
+            const tiles = document.querySelectorAll('.tile');
+            for (let i = 0; i < 5; i++) tiles[i].textContent = v[i] || '';
+        }
+        function patternStr() { return [...document.querySelectorAll('.tile')].map(el => el.dataset.state || 'b').join(''); }
+        function logStep(guess, pStr, left) {
+            const map = { b: '⬜', y: '🟨', g: '🟩' };
+            const pretty = pStr.split('').map(c => map[c]).join('');
+            const div = document.createElement('div');
+            div.className = 'item fade';
+            div.innerHTML = `<div><div style="font-weight:700">${guess} → ${pretty}</div><div class="meta">Restlösungen: ${left}</div></div><div class="meta">${new Date().toLocaleTimeString()}</div>`;
+            $('log').appendChild(div);
+
+            // Hide empty state if log has items
+            if ($('log').children.length > 0) {
+                $('empty-log').style.display = 'none';
+            }
+        }
+        function renderSuggestions(items) {
+            const el = $('suggestions');
+            if (!items.length) {
+                el.innerHTML = '';
+                $('empty-suggestions').style.display = 'block';
+                return;
+            }
+            $('empty-suggestions').style.display = 'none';
+            el.innerHTML = items.map(it => `
+    <button class="item fade" type="button" data-word="${it.w}">
+      <div class="word">${it.w}</div>
+      <div class="meta">⭑ ${it.entropy.toFixed(2)} · worst ${it.minimax}</div>
+    </button>`).join('');
+            el.querySelectorAll('button.item').forEach(b => {
+                b.addEventListener('click', () => {
+                    $('guess').value = b.dataset.word;
+                    syncTiles();
+                    showToast(`Gewählt: ${b.dataset.word}`);
+                });
+            });
+        }
+
+
+        function showToast(message) {
+            const toast = $('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function applyClue() {
+            let guess = normalizeDe($('guess').value);
+            if (guess.length !== 5 || !AZ5.test(guess)) {
+                showToast('Bitte genau 5 Buchstaben (a–z).');
+                return;
+            }
+            if (!ALLOWED.has(guess) && !confirm(`"${guess}" ist nicht in der erlaubten Liste. Trotzdem verwenden?`)) return;
+            const p = patternStr(); const map = { b: 0, y: 1, g: 2 }; let code = 0; for (const c of p) { code = code * 3 + map[c]; }
+            remaining = applyPatternFilter(guess, code, remaining);
+            history.push({ guess, code, p }); setRemain(); logStep(guess, p, remaining.length);
+            $('guess').value = ''; renderTiles('');
+            saveState();
+            if (remaining.length > 0) {
+                const pool = chooseCandidatePool();
+                const ranked = rankCandidates(pool, remaining);
+                renderSuggestions(ranked.slice(0, SHOW_N));
+            } else {
+                renderSuggestions([]);
+            }
+            $('guess').blur();
+        }
+        function autopick() {
+            if (remaining.length === 0) return showToast('Keine Restlösungen.');
+            const pool = chooseCandidatePool();
+            const r = rankCandidates(pool, remaining);
+            if (!r.length) return;
+            $('guess').value = r[0].w;
+            syncTiles();
+            showToast(`Besten Tipp: ${r[0].w}`);
+        }
+        function resetAll() {
+            history = [];
+            remaining = [...ANSWERS];
+            setRemain();
+            $('log').innerHTML = '';
+            $('empty-log').style.display = 'block';
+            $('suggestions').innerHTML = '';
+            $('empty-suggestions').style.display = 'block';
+            $('guess').value = '';
+            renderTiles('');
+            showToast('Solver zurückgesetzt');
+            saveState();
+        }
+
+        // ===== INIT =====
+        (async function () {
+            renderTiles('');
+            $('guess').addEventListener('input', syncTiles);
+            $('apply').addEventListener('click', applyClue);
+            $('autopick').addEventListener('click', autopick);
+            $('reset').addEventListener('click', resetAll);
+            $('guess').addEventListener('keydown', (e) => { if (e.key === 'Enter') applyClue(); });
+            try {
+                const res = await fetch(DATA_URL, { cache: 'no-cache' });
+                if (!res.ok) throw new Error(res.statusText);
+                const j = await res.json();
+                DATA = j;
+                BY_WORD = new Map(j.stats.map(s => [s.word, s]));
+                ANSWERS = new Set(j.answers);
+                ALLOWED = new Set(j.allowed);
+                remaining = [...ANSWERS];
+                setStatus(`Daten: Antworten ${j.answers.length} · erlaubt ${j.allowed.length}`);
+                setRemain();
+                loadState();
+                const pool = chooseCandidatePool();
+                const ranked = rankCandidates(pool, remaining);
+                renderSuggestions(ranked.slice(0, SHOW_N));
+
+                // Show empty states initially
+                $('empty-log').style.display = 'block';
+            } catch (e) {
+                console.error(e);
+                setStatus('Fehler beim Laden');
+                showToast('JSON konnte nicht geladen werden: ' + DATA_URL);
+            }
+        })();
+    </script>
+    <script>
+        (function () {
+            var y = document.getElementById('year');
+            if (y) y.textContent = new Date().getFullYear();
+            var t = document.getElementById('toTop');
+            if (t) t.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        })();
+    </script>
+
+</body>
+
+</html>

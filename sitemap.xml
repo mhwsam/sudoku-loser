@@ -8,6 +8,12 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://sudoku-löser.de/wordle-hilfe</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 
   <url>
     <loc>https://sudoku-löser.de/about</loc>
